@@ -45,8 +45,11 @@ void MainWindow::createMenu() {
 
 void MainWindow::showClosePublic() {
 
+
 }
 
 void MainWindow::showSetevikDB() {
 
+    auto *setevikDB = new SetevikDB();
+    setevikDB->show();
 }

@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <iostream>
 
+#include "setevikdb.h"
 
 class MainWindow : public QMainWindow
 {
