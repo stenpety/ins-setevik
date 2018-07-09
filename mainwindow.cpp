@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setWindowTitle(tr("Viva Setevo!"));
     createUI();
     createMenu();
+
+    // Init databases
     initiSetevikDB(SETEVIKDBFILE);
 }
 

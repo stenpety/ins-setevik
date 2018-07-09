@@ -31,8 +31,14 @@ void CompaniesMgmt::createUI() {
 void CompaniesMgmt::showNewCompanyDialog() {
     auto *newCompanyDialog = new NewCompanyDialog(this);
     if (newCompanyDialog->exec()) {
-        //do something
+        QSqlQuery query;
+        query.prepare("INSERT INTO company(name, vk, keyWord)"
+                      "VALUES (:name, :vk, :keyWord)");
+        query.bindValue(":name", newCompanyDialog->nameLineEdit->text());
+        query.bindValue(":vk", newCompanyDialog->vkLineEdit->text());
+        query.bindValue(":keyWord", newCompanyDialog->keyWordLineEdit->text());
+        if (!query.exec()) {
+            qWarning() << "New company ERROR: " << query.lastError().text();
+        }
     }
-
-
 }
