@@ -26,9 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    setevikdb.cpp
+    setevikdb.cpp \
+    companiesmgmt.cpp
 
 HEADERS += \
         mainwindow.h \
     setevikdb.h \
-    initsetevikdb.h
+    initsetevikdb.h \
+    companiesmgmt.h

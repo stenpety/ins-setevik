@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "setevikdb.h"
+#include "companiesmgmt.h"
 
 class MainWindow : public QMainWindow {
 
@@ -25,6 +26,8 @@ private slots:
     void showClosePublic();
     void showSetevikDB();
 
+    void showCompaniesMgmt();
+
 private:
     const QString DBPATH = QStandardPaths::locate(QStandardPaths::AppDataLocation,
                                                   QString(), QStandardPaths::LocateDirectory);
@@ -36,6 +39,9 @@ private:
     QMenu *setevoMenu;
     QAction *closePublicAct;
     QAction *setevikDBAct;
+
+    QMenu *managementMenu;
+    QAction *companiesAct;
 };
 
 #endif // MAINWINDOW_H

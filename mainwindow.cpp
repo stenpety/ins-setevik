@@ -42,6 +42,13 @@ void MainWindow::createMenu() {
     setevoMenu->addAction(setevikDBAct);
     connect(setevikDBAct, &QAction::triggered, this, &MainWindow::showSetevikDB);
 
+
+    managementMenu = menuBar()->addMenu(tr("Management"));
+
+    companiesAct = new QAction(tr("MLM Companies"));
+    companiesAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_M));
+    managementMenu->addAction(companiesAct);
+    connect(companiesAct, &QAction::triggered, this, &MainWindow::showCompaniesMgmt);
 }
 
 
@@ -54,4 +61,9 @@ void MainWindow::showSetevikDB() {
 
     auto *setevikDB = new SetevikDB();
     setevikDB->show();
+}
+
+void MainWindow::showCompaniesMgmt() {
+    auto *companiesMgmt = new CompaniesMgmt();
+    companiesMgmt->show();
 }
