@@ -4,6 +4,24 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
     setWindowTitle("MLM Companies");
     createUI();
 
+    // db model
+    model = new QSqlRelationalTableModel(companyTable);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable("company");
+
+    model->setHeaderData(model->fieldIndex("name"), Qt::Horizontal, tr("Company"));
+    model->setHeaderData(model->fieldIndex("vk"), Qt::Horizontal, tr("VK Group"));
+    model->setHeaderData(model->fieldIndex("keyWord"), Qt::Horizontal, tr("Key words"));
+
+    if (!model->select()) {
+        //show error
+        return;
+    }
+
+    companyTable->setModel(model);
+    companyTable->setColumnHidden(model->fieldIndex("id"), true);
+    companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
 }
 
 void CompaniesMgmt::createUI() {

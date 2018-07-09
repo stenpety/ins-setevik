@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include <QtSql>
 
+#include <iostream>
+
 #include "newcompanydialog.h"
 
 class CompaniesMgmt : public QWidget {
@@ -30,7 +32,7 @@ private:
     QPushButton *deleteButton;
 
     QTableView *companyTable;
-
+    QSqlRelationalTableModel *model;
 };
 
 #endif // COMPANIESMGMT_H
