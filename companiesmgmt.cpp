@@ -19,6 +19,7 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
     }
 
     companyTable->setModel(model);
+    companyTable->setItemDelegate(new QSqlRelationalDelegate(companyTable));
     companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -49,14 +50,12 @@ void CompaniesMgmt::createUI() {
 void CompaniesMgmt::showNewCompanyDialog() {
     auto *newCompanyDialog = new NewCompanyDialog(this);
     if (newCompanyDialog->exec()) {
-        QSqlQuery query;
-        query.prepare("INSERT INTO company(name, vk, keyWord)"
-                      "VALUES (:name, :vk, :keyWord)");
-        query.bindValue(":name", newCompanyDialog->nameLineEdit->text());
-        query.bindValue(":vk", newCompanyDialog->vkLineEdit->text());
-        query.bindValue(":keyWord", newCompanyDialog->keyWordLineEdit->text());
-        if (!query.exec()) {
-            qWarning() << "New company ERROR: " << query.lastError().text();
-        }
+
+        int rowCount = model->rowCount();
+        model->insertRows(rowCount, 1);
+        model->setData(model->index(rowCount, 1), newCompanyDialog->nameLineEdit->text());
+        model->setData(model->index(rowCount, 2), newCompanyDialog->vkLineEdit->text());
+        model->setData(model->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
+        model->submitAll();
     }
 }
