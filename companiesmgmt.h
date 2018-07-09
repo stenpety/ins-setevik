@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QtWidgets>
 
+#include "newcompanydialog.h"
+
 class CompaniesMgmt : public QWidget {
 
     Q_OBJECT
@@ -19,6 +21,7 @@ private:
     void createUI();
 
 private slots:
+    void showNewCompanyDialog();
 
 private:
     QPushButton *newButton;

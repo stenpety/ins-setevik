@@ -16,17 +16,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-
 private:
     void createUI();
     void createMenu();
+
+public slots:
 
 private slots:
     void showClosePublic();
     void showSetevikDB();
 
     void showCompaniesMgmt();
+
+public:
 
 private:
     const QString DBPATH = QStandardPaths::locate(QStandardPaths::AppDataLocation,

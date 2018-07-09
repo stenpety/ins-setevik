@@ -14,6 +14,7 @@ void CompaniesMgmt::createUI() {
     layoutMain->addLayout(layoutButtons);
 
     newButton = new QPushButton(tr("&New"));
+    connect(newButton, &QPushButton::clicked, this, &CompaniesMgmt::showNewCompanyDialog);
     layoutButtons->addWidget(newButton);
 
     editButton = new QPushButton(tr("&Edit"));
@@ -24,5 +25,14 @@ void CompaniesMgmt::createUI() {
 
     companyTable = new QTableView();
     layoutMain->addWidget(companyTable);
+
+}
+
+void CompaniesMgmt::showNewCompanyDialog() {
+    auto *newCompanyDialog = new NewCompanyDialog(this);
+    if (newCompanyDialog->exec()) {
+        //do something
+    }
+
 
 }
