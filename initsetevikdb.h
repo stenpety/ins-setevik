@@ -1,0 +1,62 @@
+#ifndef INITSETEVIKDB_H
+#define INITSETEVIKDB_H
+
+#include <QtSql>
+
+void addCompany(QSqlQuery &query, const QString &companyName, const QString &companyVK,
+                const QString &companyKeyWord) {
+    query.addBindValue(companyName);
+    query.addBindValue(companyVK);
+    query.addBindValue(companyKeyWord);
+    query.exec();
+}
+
+void addSetevik(QSqlQuery &query, const QString &setevikName, const QString &setevikVK,
+                const QString &setevikStory, const QVariant &companyId) {
+    query.addBindValue(setevikName);
+    query.addBindValue(setevikVK);
+    query.addBindValue(setevikStory);
+    query.addBindValue(companyId);
+    query.exec();
+}
+
+void databaseConnect(const QString &dbFileName) {
+    const QString DRIVER ("QSQLITE");
+
+    if (QSqlDatabase::isDriverAvailable(DRIVER)) {
+        QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
+
+        db.setDatabaseName(dbFileName);
+        if (!db.open()) {
+            qWarning() << "Database connect ERROR: " << db.lastError().text();
+        }
+    } else {
+        qWarning() << "Database connect ERROR: no driver " << DRIVER << " available";
+    }
+}
+
+void createTablesDb() {
+    QSqlQuery query;
+
+    query.prepare("CREATE TABLE setevik (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, story TEXT, company INTEGER)");
+    if (!query.exec()) {
+        qWarning() << "Database create tables ERROR: " << query.lastError().text();
+    }
+
+    query.prepare("CREATE TABLE company (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, keyword TEXT)");
+    if (!query.exec()) {
+        qWarning() << "Database create tables ERROR: " << query.lastError().text();
+    }
+}
+
+void initiSetevikDB(const QString &dbFileName) {
+
+    bool dbFileExists = (QFileInfo::exists(dbFileName) && QFileInfo(dbFileName).isFile());
+    databaseConnect(dbFileName);
+
+    if (!dbFileExists) {
+        createTablesDb();
+    }
+}
+
+#endif // INITSETEVIKDB_H

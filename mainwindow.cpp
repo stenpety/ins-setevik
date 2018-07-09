@@ -1,9 +1,11 @@
 #include "mainwindow.h"
+#include "initsetevikdb.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setWindowTitle(tr("Viva Setevo!"));
     createUI();
     createMenu();
+    initiSetevikDB(SETEVIKDBFILE);
 }
 
 MainWindow::~MainWindow() {}

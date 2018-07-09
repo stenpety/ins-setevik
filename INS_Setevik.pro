@@ -4,11 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = INS_Setevik
+TARGET = "INS Setevik"
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -30,4 +30,5 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    setevikdb.h
+    setevikdb.h \
+    initsetevikdb.h

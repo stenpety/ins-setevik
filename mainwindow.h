@@ -7,8 +7,8 @@
 
 #include "setevikdb.h"
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
+
     Q_OBJECT
 
 public:
@@ -26,6 +26,10 @@ private slots:
     void showSetevikDB();
 
 private:
+    const QString DBPATH = QStandardPaths::locate(QStandardPaths::AppDataLocation,
+                                                  QString(), QStandardPaths::LocateDirectory);
+    const QString SETEVIKDBFILE = DBPATH + "setevik_db.sqlite";
+
     QPushButton *closePublicButton;
     QPushButton *setevikDBButton;
 
