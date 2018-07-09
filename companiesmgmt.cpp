@@ -7,5 +7,22 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
 }
 
 void CompaniesMgmt::createUI() {
+    auto *layoutMain = new QVBoxLayout();
+    setLayout(layoutMain);
+
+    auto *layoutButtons = new QHBoxLayout();
+    layoutMain->addLayout(layoutButtons);
+
+    newButton = new QPushButton(tr("&New"));
+    layoutButtons->addWidget(newButton);
+
+    editButton = new QPushButton(tr("&Edit"));
+    layoutButtons->addWidget(editButton);
+
+    deleteButton = new QPushButton(tr("&Delete"));
+    layoutButtons->addWidget(deleteButton);
+
+    companyTable = new QTableView();
+    layoutMain->addWidget(companyTable);
 
 }

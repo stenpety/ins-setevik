@@ -2,6 +2,7 @@
 #define COMPANIESMGMT_H
 
 #include <QWidget>
+#include <QtWidgets>
 
 class CompaniesMgmt : public QWidget {
 
@@ -19,7 +20,12 @@ private:
 
 private slots:
 
+private:
+    QPushButton *newButton;
+    QPushButton *editButton;
+    QPushButton *deleteButton;
 
+    QTableView *companyTable;
 
 };
 
