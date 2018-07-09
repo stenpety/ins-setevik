@@ -18,6 +18,7 @@ private:
 public slots:
 
 private slots:
+    void activateSubmitButton();
 
 public:
     QLineEdit *nameLineEdit;
