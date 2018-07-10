@@ -29,6 +29,8 @@ private slots:
 
     void showCompaniesMgmt();
 
+    void showAbout();
+
 public:
 
 private:
@@ -47,6 +49,9 @@ private:
 
     QMenu *managementMenu;
     QAction *companiesAct;
+
+    QMenu *aboutMenu;
+    QAction *aboutAct;
 };
 
 #endif // MAINWINDOW_H

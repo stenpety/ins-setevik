@@ -60,6 +60,12 @@ void MainWindow::createMenu() {
     companiesAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_M));
     managementMenu->addAction(companiesAct);
     connect(companiesAct, &QAction::triggered, this, &MainWindow::showCompaniesMgmt);
+
+    aboutMenu = menuBar()->addMenu(tr("About"));
+
+    aboutAct = new QAction(tr("About"));
+    aboutMenu->addAction(aboutAct);
+    connect(aboutAct, &QAction::triggered, this, &MainWindow::showAbout);
 }
 
 
@@ -81,4 +87,9 @@ void MainWindow::showSetevikTimer() {
 void MainWindow::showCompaniesMgmt() {
     auto *companiesMgmt = new CompaniesMgmt();
     companiesMgmt->show();
+}
+
+void MainWindow::showAbout() {
+    QMessageBox::about(this, "About INS Setevik",
+                       "KangaSoft\nProudly made in Melbourne, Australia\n2018");
 }
