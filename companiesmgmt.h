@@ -22,6 +22,8 @@ public slots:
 
 private:
     void createUI();
+    void setupDb();
+    void setupTable();
 
 private slots:
     void showNewCompanyDialog();

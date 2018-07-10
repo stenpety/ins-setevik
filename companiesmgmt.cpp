@@ -4,32 +4,8 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
     setWindowTitle("MLM Companies");
     createUI();
 
-    // db model
-    model = new QSqlRelationalTableModel(companyTable);
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->setTable("company");
-
-    model->setHeaderData(model->fieldIndex("name"), Qt::Horizontal, tr("Company"));
-    model->setHeaderData(model->fieldIndex("vk"), Qt::Horizontal, tr("VK Group"));
-    model->setHeaderData(model->fieldIndex("keyWord"), Qt::Horizontal, tr("Key words"));
-
-    if (!model->select()) {
-        // TODO: show error
-        return;
-    }
-
-    companyTable->setModel(model);
-    delegate = new QSqlRelationalDelegate(companyTable);
-    companyTable->setItemDelegate(delegate);
-    companyTable->setColumnHidden(model->fieldIndex("id"), true);
-    companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
-
-    mapper = new QDataWidgetMapper();
-    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    mapper->setModel(model);
-    mapper->setItemDelegate(delegate);
-    connect(companyTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
-            mapper, &QDataWidgetMapper::setCurrentModelIndex);
+    setupDb();
+    setupTable();
 }
 
 void CompaniesMgmt::createUI() {
@@ -53,6 +29,38 @@ void CompaniesMgmt::createUI() {
     companyTable = new QTableView();
     layoutMain->addWidget(companyTable);
 
+}
+
+void CompaniesMgmt::setupDb() {
+
+    model = new QSqlRelationalTableModel(companyTable);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable("company");
+
+    model->setHeaderData(model->fieldIndex("name"), Qt::Horizontal, tr("Company"));
+    model->setHeaderData(model->fieldIndex("vk"), Qt::Horizontal, tr("VK Group"));
+    model->setHeaderData(model->fieldIndex("keyWord"), Qt::Horizontal, tr("Key words"));
+
+    if (!model->select()) {
+        // TODO: show error
+        return;
+    }
+}
+
+void CompaniesMgmt::setupTable() {
+
+    companyTable->setModel(model);
+    delegate = new QSqlRelationalDelegate(companyTable);
+    companyTable->setItemDelegate(delegate);
+    companyTable->setColumnHidden(model->fieldIndex("id"), true);
+    companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    mapper = new QDataWidgetMapper();
+    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    mapper->setModel(model);
+    mapper->setItemDelegate(delegate);
+    connect(companyTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            mapper, &QDataWidgetMapper::setCurrentModelIndex);
 }
 
 void CompaniesMgmt::showNewCompanyDialog() {
@@ -86,6 +94,6 @@ void CompaniesMgmt::deleteCompany() {
         }
         model->submitAll();
         mapper->submit();
-        mapper->setCurrentIndex(1);
+        mapper->setCurrentIndex(-1);
     }
 }
