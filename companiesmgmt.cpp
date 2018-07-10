@@ -20,6 +20,7 @@ void CompaniesMgmt::createUI() {
     layoutButtons->addWidget(newButton);
 
     editButton = new QPushButton(tr("&Edit"));
+    connect(editButton, &QPushButton::clicked, this, &CompaniesMgmt::showEditCompanyDialog);
     layoutButtons->addWidget(editButton);
 
     deleteButton = new QPushButton(tr("&Delete"));
@@ -82,6 +83,22 @@ void CompaniesMgmt::showNewCompanyDialog() {
 
 void CompaniesMgmt::showEditCompanyDialog() {
 
+    int rowToEdit = mapper->currentIndex();
+
+    auto *editCompanyDialog = new NewCompanyDialog(this);
+    editCompanyDialog->nameLineEdit->setText(model->record(rowToEdit).value("name").toString());
+    editCompanyDialog->vkLineEdit->setText(model->record(rowToEdit).value("vk").toString());
+    editCompanyDialog->keyWordLineEdit->setText(model->record(rowToEdit).value("keyWord").toString());
+
+    if (editCompanyDialog->exec()) {
+
+        model->setData(model->index(rowToEdit, 1), editCompanyDialog->nameLineEdit->text());
+        model->setData(model->index(rowToEdit, 2), editCompanyDialog->vkLineEdit->text());
+        model->setData(model->index(rowToEdit, 3), editCompanyDialog->keyWordLineEdit->text());
+        model->submitAll();
+
+        // TODO: adjust columns width after insertion of a new item
+    }
 }
 
 void CompaniesMgmt::deleteCompany() {
