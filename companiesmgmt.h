@@ -25,6 +25,8 @@ private:
 
 private slots:
     void showNewCompanyDialog();
+    void showEditCompanyDialog();
+    void deleteCompany();
 
 private:
     QPushButton *newButton;
@@ -33,6 +35,7 @@ private:
 
     QTableView *companyTable;
     QSqlRelationalTableModel *model;
+    QDataWidgetMapper *mapper;
 };
 
 #endif // COMPANIESMGMT_H

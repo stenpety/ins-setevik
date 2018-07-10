@@ -23,6 +23,12 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
     companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    mapper = new QDataWidgetMapper();
+    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    mapper->setModel(model);
+    mapper->setItemDelegate(new QSqlRelationalDelegate);
+    connect(companyTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            mapper, &QDataWidgetMapper::setCurrentModelIndex);
 }
 
 void CompaniesMgmt::createUI() {
@@ -40,6 +46,7 @@ void CompaniesMgmt::createUI() {
     layoutButtons->addWidget(editButton);
 
     deleteButton = new QPushButton(tr("&Delete"));
+    connect(deleteButton, &QPushButton::clicked, this, &CompaniesMgmt::deleteCompany);
     layoutButtons->addWidget(deleteButton);
 
     companyTable = new QTableView();
@@ -58,4 +65,20 @@ void CompaniesMgmt::showNewCompanyDialog() {
         model->setData(model->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
     }
+}
+
+void CompaniesMgmt::showEditCompanyDialog() {
+
+}
+
+void CompaniesMgmt::deleteCompany() {
+    int rowToDelete = mapper->currentIndex();
+    std::cout << "Del: " << rowToDelete << std::endl;
+    if (!(model->removeRow(rowToDelete))) {
+        // show error
+        return;
+    }
+    model->submitAll();
+    mapper->submit();
+    mapper->setCurrentIndex(1);
 }
