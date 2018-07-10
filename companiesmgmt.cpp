@@ -54,6 +54,8 @@ void CompaniesMgmt::setupTable() {
     companyTable->setItemDelegate(delegate);
     companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    companyTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    companyTable->resizeColumnsToContents();
 
     mapper = new QDataWidgetMapper();
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -73,6 +75,8 @@ void CompaniesMgmt::showNewCompanyDialog() {
         model->setData(model->index(rowCount, 2), newCompanyDialog->vkLineEdit->text());
         model->setData(model->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
+
+        // TODO: adjust columns width after insertion of a new item
     }
 }
 
@@ -94,6 +98,8 @@ void CompaniesMgmt::deleteCompany() {
         }
         model->submitAll();
         mapper->submit();
-        mapper->setCurrentIndex(-1);
+
+        mapper->setCurrentIndex(qMax(1, rowToDelete-1));
+        companyTable->selectRow(qMax(1, rowToDelete-1));
     }
 }
