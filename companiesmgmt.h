@@ -36,6 +36,7 @@ private:
     QTableView *companyTable;
     QSqlRelationalTableModel *model;
     QDataWidgetMapper *mapper;
+    QSqlRelationalDelegate *delegate;
 };
 
 #endif // COMPANIESMGMT_H

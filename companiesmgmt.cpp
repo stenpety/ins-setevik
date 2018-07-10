@@ -14,19 +14,20 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
     model->setHeaderData(model->fieldIndex("keyWord"), Qt::Horizontal, tr("Key words"));
 
     if (!model->select()) {
-        //show error
+        // TODO: show error
         return;
     }
 
     companyTable->setModel(model);
-    companyTable->setItemDelegate(new QSqlRelationalDelegate(companyTable));
+    delegate = new QSqlRelationalDelegate(companyTable);
+    companyTable->setItemDelegate(delegate);
     companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
     mapper = new QDataWidgetMapper();
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     mapper->setModel(model);
-    mapper->setItemDelegate(new QSqlRelationalDelegate);
+    mapper->setItemDelegate(delegate);
     connect(companyTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
             mapper, &QDataWidgetMapper::setCurrentModelIndex);
 }
@@ -72,13 +73,19 @@ void CompaniesMgmt::showEditCompanyDialog() {
 }
 
 void CompaniesMgmt::deleteCompany() {
-    int rowToDelete = mapper->currentIndex();
-    std::cout << "Del: " << rowToDelete << std::endl;
-    if (!(model->removeRow(rowToDelete))) {
-        // show error
-        return;
+
+    QMessageBox::StandardButton deleteDialog;
+    deleteDialog = QMessageBox::question(this, "Delete a company", "Are you sure?",
+                                         QMessageBox::Yes|QMessageBox::No);
+    if (deleteDialog == QMessageBox::Yes) {
+        int rowToDelete = mapper->currentIndex();
+
+        if (!(model->removeRow(rowToDelete))) {
+            // TODO: show error
+            return;
+        }
+        model->submitAll();
+        mapper->submit();
+        mapper->setCurrentIndex(1);
     }
-    model->submitAll();
-    mapper->submit();
-    mapper->setCurrentIndex(1);
 }
