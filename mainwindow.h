@@ -25,6 +25,7 @@ public slots:
 private slots:
     void showClosePublic();
     void showSetevikDB();
+    void showSetevikTimer();
 
     void showCompaniesMgmt();
 
@@ -37,10 +38,12 @@ private:
 
     QPushButton *closePublicButton;
     QPushButton *setevikDBButton;
+    QPushButton *setevikTimerButton;
 
     QMenu *setevoMenu;
     QAction *closePublicAct;
     QAction *setevikDBAct;
+    QAction *setevikTimerAct;
 
     QMenu *managementMenu;
     QAction *companiesAct;

@@ -29,6 +29,11 @@ void MainWindow::createUI() {
     connect(setevikDBButton, &QPushButton::clicked, this, &MainWindow::showSetevikDB);
     layoutMain->addWidget(setevikDBButton);
 
+    setevikTimerButton = new QPushButton(tr("Setevik Timer"));
+    setevikTimerButton->setEnabled(true);
+    connect(setevikTimerButton, &QPushButton::clicked, this, &MainWindow::showSetevikTimer);
+    layoutMain->addWidget(setevikTimerButton);
+
 }
 
 void MainWindow::createMenu() {
@@ -44,6 +49,10 @@ void MainWindow::createMenu() {
     setevoMenu->addAction(setevikDBAct);
     connect(setevikDBAct, &QAction::triggered, this, &MainWindow::showSetevikDB);
 
+    setevikTimerAct = new QAction(tr("Setevik Timer"), this);
+    setevikTimerAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
+    setevoMenu->addAction(setevikTimerAct);
+    connect(setevikTimerAct, &QAction::triggered, this, &MainWindow::showSetevikTimer);
 
     managementMenu = menuBar()->addMenu(tr("Management"));
 
@@ -63,6 +72,10 @@ void MainWindow::showSetevikDB() {
 
     auto *setevikDB = new SetevikDB();
     setevikDB->show();
+}
+
+void MainWindow::showSetevikTimer() {
+
 }
 
 void MainWindow::showCompaniesMgmt() {

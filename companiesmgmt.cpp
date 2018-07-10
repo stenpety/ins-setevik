@@ -9,6 +9,9 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
 }
 
 void CompaniesMgmt::createUI() {
+
+    setMinimumSize(640, 480);
+
     auto *layoutMain = new QVBoxLayout();
     setLayout(layoutMain);
 
@@ -43,7 +46,8 @@ void CompaniesMgmt::setupDb() {
     model->setHeaderData(model->fieldIndex("keyWord"), Qt::Horizontal, tr("Key words"));
 
     if (!model->select()) {
-        // TODO: show error
+        QMessageBox::critical(this, "Unable to setup model",
+                              "Error creating table model: " + model->lastError().text());
         return;
     }
 }
@@ -110,7 +114,8 @@ void CompaniesMgmt::deleteCompany() {
         int rowToDelete = mapper->currentIndex();
 
         if (!(model->removeRow(rowToDelete))) {
-            // TODO: show error
+            QMessageBox::critical(this, "Unable to delete item",
+                                  "Error deleting item: " + model->lastError().text());
             return;
         }
         model->submitAll();
