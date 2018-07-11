@@ -127,6 +127,9 @@ void SetevikDB::setupUItoDB() {
     mapper->setItemDelegate(delegate);
     connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
             mapper, &QDataWidgetMapper::setCurrentModelIndex);
+    connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            this, &SetevikDB::updateDetails);
+    updateDetails(setevikTable->selectionModel()->currentIndex());
 }
 
 void SetevikDB::showNewSetevikDialog() {
@@ -194,4 +197,12 @@ void SetevikDB::deleteSetevik() {
 
 void SetevikDB::copySetevikVK() {
 
+}
+
+void SetevikDB::updateDetails(const QModelIndex &index) {
+    int indexRow = index.row();
+    nameLineEdit->setText(setevikModel->record(indexRow).value("name").toString());
+    companyLineEdit->setText(setevikModel->record(indexRow).value("company").toString());
+    vkLineEdit->setText(setevikModel->record(indexRow).value("vk").toString());
+    storyTextEdit->setText(setevikModel->record(indexRow).value("story").toString());
 }

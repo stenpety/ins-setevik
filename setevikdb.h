@@ -18,6 +18,8 @@ private:
     void setupDbModels();
     void setupUItoDB();
 
+    void updateDetails(const QModelIndex &index);
+
 signals:
 
 public slots:
