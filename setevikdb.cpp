@@ -5,7 +5,7 @@ SetevikDB::SetevikDB(QWidget *parent) : QWidget(parent) {
     setWindowTitle("Setevo Personalities");
     createUI();
 
-    setupDb();
+    setupDbModels();
     setupUItoDB();
 
 }
@@ -72,7 +72,7 @@ void SetevikDB::createUI() {
     setLayout(layoutMain);
 }
 
-void SetevikDB::setupDb() {
+void SetevikDB::setupDbModels() {
 
     // Companies
     QStringList companies;
@@ -86,12 +86,48 @@ void SetevikDB::setupDb() {
         companies <<query.value(0).toString();
     }
     companyModel = new QStringListModel(companies, this);
+
+    // Persons
+    setevikModel = new QSqlRelationalTableModel(setevikTable);
+    setevikModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    setevikModel->setTable("setevik");
+
+    setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
+    /*
+    setevikModel->setHeaderData(setevikModel->fieldIndex("company"), Qt::Horizontal, tr("Company"));
+    setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Company"));
+    */
+
+    if (!setevikModel->select()) {
+        QMessageBox::critical(this, "Unable to setup model",
+                              "Error creating Setevik table model: " + setevikModel->lastError().text());
+        return;
+    }
 }
 
 void SetevikDB::setupUItoDB() {
 
     // Companies
     companyComboBox->setModel(companyModel);
+
+    // Persons
+    setevikTable->setModel(setevikModel);
+    delegate = new QSqlRelationalDelegate(setevikTable);
+    setevikTable->setItemDelegate(delegate);
+    setevikTable->setColumnHidden(setevikModel->fieldIndex("id"), true);
+    setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
+    setevikTable->setColumnHidden(setevikModel->fieldIndex("vk"), true);
+    setevikTable->setColumnHidden(setevikModel->fieldIndex("story"), true);
+    setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    setevikTable->resizeColumnsToContents();
+
+    mapper = new QDataWidgetMapper();
+    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    mapper->setModel(setevikModel);
+    mapper->setItemDelegate(delegate);
+    connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            mapper, &QDataWidgetMapper::setCurrentModelIndex);
 }
 
 void SetevikDB::showNewSetevikDialog() {

@@ -15,7 +15,7 @@ public:
 
 private:
     void createUI();
-    void setupDb();
+    void setupDbModels();
     void setupUItoDB();
 
 signals:
@@ -39,6 +39,7 @@ private:
 
     // 1-0
     QTableView *setevikTable;
+    QSqlRelationalTableModel *setevikModel;
 
     // 0-1
     QComboBox *companyComboBox;
@@ -51,8 +52,7 @@ private:
     QPushButton *copySetevikVKButton;
     QTextEdit *storyTextEdit;
 
-    // Model-mapper-delegate
-    QSqlRelationalTableModel *model;
+    // Mapper, Delegate
     QDataWidgetMapper *mapper;
     QSqlRelationalDelegate *delegate;
 
