@@ -10,7 +10,8 @@ class NewSetevikDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit NewSetevikDialog(QWidget *parent = nullptr);
+    explicit NewSetevikDialog(QWidget *parent = nullptr,
+                              const QString &title = "Add new");
 
 private:
     void createUI();

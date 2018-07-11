@@ -1,8 +1,8 @@
 #include "newsetevikdialog.h"
 
-NewSetevikDialog::NewSetevikDialog(QWidget *parent) : QDialog(parent) {
+NewSetevikDialog::NewSetevikDialog(QWidget *parent, const QString &title) : QDialog(parent) {
     // TODO: take title as parameter, used both for new and edit
-    setWindowTitle("Add new Setevik");
+    setWindowTitle(title);
     createUI();
 }
 

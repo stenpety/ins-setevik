@@ -71,7 +71,7 @@ void CompaniesMgmt::setupTable() {
 }
 
 void CompaniesMgmt::showNewCompanyDialog() {
-    auto *newCompanyDialog = new NewCompanyDialog(this);
+    auto *newCompanyDialog = new NewCompanyDialog(this, "Add new MLM Company");
     if (newCompanyDialog->exec()) {
 
         int rowCount = model->rowCount();
@@ -89,7 +89,7 @@ void CompaniesMgmt::showEditCompanyDialog() {
 
     int rowToEdit = mapper->currentIndex();
 
-    auto *editCompanyDialog = new NewCompanyDialog(this);
+    auto *editCompanyDialog = new NewCompanyDialog(this, "Edit MLM Company");
     editCompanyDialog->nameLineEdit->setText(model->record(rowToEdit).value("name").toString());
     editCompanyDialog->vkLineEdit->setText(model->record(rowToEdit).value("vk").toString());
     editCompanyDialog->keyWordLineEdit->setText(model->record(rowToEdit).value("keyWord").toString());

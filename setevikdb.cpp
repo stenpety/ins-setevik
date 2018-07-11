@@ -131,7 +131,7 @@ void SetevikDB::setupUItoDB() {
 }
 
 void SetevikDB::showNewSetevikDialog() {
-    auto *newSetevikDialog = new NewSetevikDialog(this);
+    auto *newSetevikDialog = new NewSetevikDialog(this, "Add new Setevik");
     if (newSetevikDialog->exec()) {
 
         int rowCount = setevikModel->rowCount();
@@ -150,7 +150,7 @@ void SetevikDB::showEditSetevikDialog() {
 
     int rowToEdit = mapper->currentIndex();
 
-    auto *editSetevikDialog = new NewSetevikDialog(this);
+    auto *editSetevikDialog = new NewSetevikDialog(this, "Edit Setevik");
     editSetevikDialog->nameLineEdit->setText(setevikModel->record(rowToEdit).value("name").toString());
     editSetevikDialog->vkLineEdit->setText(setevikModel->record(rowToEdit).value("vk").toString());
     editSetevikDialog->storyTextEdit->setText(setevikModel->record(rowToEdit).value("story").toString());

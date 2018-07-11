@@ -1,7 +1,7 @@
 #include "newcompanydialog.h"
 
-NewCompanyDialog::NewCompanyDialog(QWidget *parent) : QDialog(parent) {
-    setWindowTitle("Add new MLM company");
+NewCompanyDialog::NewCompanyDialog(QWidget *parent, const QString &title) : QDialog(parent) {
+    setWindowTitle(title);
     createUI();
 }
 

@@ -9,7 +9,8 @@ class NewCompanyDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit NewCompanyDialog(QWidget *parent = nullptr);
+    explicit NewCompanyDialog(QWidget *parent = nullptr,
+                              const QString &title = "Add new");
 
 private:
     void createUI();
