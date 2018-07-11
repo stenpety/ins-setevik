@@ -67,8 +67,17 @@ void NewSetevikDialog::activateSubmitButton() {
 }
 
 void NewSetevikDialog::setupModel() {
+
     QStringList companies;
-    companies << tr("NL") << tr("Armelle");
+    QSqlQuery query;
+    query.prepare("SELECT name FROM company");
+    if (!query.exec()) {
+        qWarning() << "Companies query ERROR: " << query.lastError().text();
+    }
+
+    while (query.next()) {
+        companies <<query.value(0).toString();
+    }
     companyModel = new QStringListModel(companies, this);
 }
 
