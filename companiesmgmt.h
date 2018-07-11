@@ -16,19 +16,21 @@ class CompaniesMgmt : public QWidget {
 public:
     explicit CompaniesMgmt(QWidget *parent = nullptr);
 
-signals:
-
-public slots:
-
 private:
     void createUI();
     void setupDb();
     void setupTable();
 
+signals:
+
+public slots:
+
 private slots:
     void showNewCompanyDialog();
     void showEditCompanyDialog();
     void deleteCompany();
+
+public:
 
 private:
     QPushButton *newButton;
