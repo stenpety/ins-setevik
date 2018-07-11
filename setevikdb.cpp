@@ -148,6 +148,24 @@ void SetevikDB::showNewSetevikDialog() {
 
 void SetevikDB::showEditSetevikDialog() {
 
+    int rowToEdit = mapper->currentIndex();
+
+    auto *editSetevikDialog = new NewSetevikDialog(this);
+    editSetevikDialog->nameLineEdit->setText(setevikModel->record(rowToEdit).value("name").toString());
+    editSetevikDialog->vkLineEdit->setText(setevikModel->record(rowToEdit).value("vk").toString());
+    editSetevikDialog->storyTextEdit->setText(setevikModel->record(rowToEdit).value("story").toString());
+    editSetevikDialog->companyComboBox->setCurrentIndex(setevikModel->record(rowToEdit).value("company").toInt());
+
+    if (editSetevikDialog->exec()) {
+
+        setevikModel->setData(setevikModel->index(rowToEdit, 1), editSetevikDialog->nameLineEdit->text());
+        setevikModel->setData(setevikModel->index(rowToEdit, 2), editSetevikDialog->vkLineEdit->text());
+        setevikModel->setData(setevikModel->index(rowToEdit, 3), editSetevikDialog->storyTextEdit->toPlainText());
+        setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->companyComboBox->currentIndex());
+
+        setevikModel->submitAll();
+    }
+
 }
 
 void SetevikDB::deleteSetevik() {
