@@ -93,10 +93,6 @@ void SetevikDB::setupDbModels() {
     setevikModel->setTable("setevik");
 
     setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
-    /*
-    setevikModel->setHeaderData(setevikModel->fieldIndex("company"), Qt::Horizontal, tr("Company"));
-    setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Company"));
-    */
 
     if (!setevikModel->select()) {
         QMessageBox::critical(this, "Unable to setup model",
@@ -121,6 +117,9 @@ void SetevikDB::setupUItoDB() {
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->resizeColumnsToContents();
+    if (setevikModel->rowCount() > 0) {
+        setevikTable->selectRow(0);
+    }
 
     mapper = new QDataWidgetMapper();
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -169,7 +168,27 @@ void SetevikDB::showEditSetevikDialog() {
 }
 
 void SetevikDB::deleteSetevik() {
+    QMessageBox::StandardButton deleteDialog;
+    deleteDialog = QMessageBox::question(this, "Delete Setevik", "Are you sure?",
+                          QMessageBox::Yes|QMessageBox::No);
 
+    if (deleteDialog == QMessageBox::Yes) {
+
+        int rowToDelete = mapper->currentIndex();
+
+        if (!setevikModel->removeRow(rowToDelete)) {
+            QMessageBox::critical(this, "Unable to delete item",
+                                  "Error deleting item: " + setevikModel->lastError().text());
+            return;
+        }
+
+        setevikModel->submitAll();
+        mapper->submit();
+
+        mapper->setCurrentIndex(qMax(0, rowToDelete-1));
+        setevikTable->selectRow(qMax(0, rowToDelete-1));
+
+    }
 
 }
 
