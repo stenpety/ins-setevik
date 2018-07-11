@@ -133,7 +133,16 @@ void SetevikDB::setupUItoDB() {
 void SetevikDB::showNewSetevikDialog() {
     auto *newSetevikDialog = new NewSetevikDialog(this);
     if (newSetevikDialog->exec()) {
-        //TODO: add new setevik to dn logic
+
+        int rowCount = setevikModel->rowCount();
+        setevikModel->insertRows(rowCount, 1);
+
+        setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text());
+        setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
+        setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
+        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
+
+        setevikModel->submitAll();
     }
 }
 
