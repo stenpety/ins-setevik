@@ -54,6 +54,7 @@ void initiSetevikDB(const QString &dbFileName) {
     bool dbFileExists = (QFileInfo::exists(dbFileName) && QFileInfo(dbFileName).isFile());
     databaseConnect(dbFileName);
 
+    // TODO: check tables, NOT file existense
     if (!dbFileExists) {
         createTablesDb();
     }

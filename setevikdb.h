@@ -16,7 +16,7 @@ public:
 private:
     void createUI();
     void setupDb();
-    void setupTable();
+    void setupUItoDB();
 
 signals:
 
@@ -42,6 +42,7 @@ private:
 
     // 0-1
     QComboBox *companyComboBox;
+    QStringListModel *companyModel;
 
     // 1-1
     QLineEdit *nameLineEdit;

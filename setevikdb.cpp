@@ -5,6 +5,9 @@ SetevikDB::SetevikDB(QWidget *parent) : QWidget(parent) {
     setWindowTitle("Setevo Personalities");
     createUI();
 
+    setupDb();
+    setupUItoDB();
+
 }
 
 void SetevikDB::createUI() {
@@ -71,10 +74,24 @@ void SetevikDB::createUI() {
 
 void SetevikDB::setupDb() {
 
+    // Companies
+    QStringList companies;
+    QSqlQuery query;
+    query.prepare("SELECT name FROM company");
+    if (!query.exec()) {
+        qWarning() << "Companies query ERROR: " << query.lastError().text();
+    }
+
+    while (query.next()) {
+        companies <<query.value(0).toString();
+    }
+    companyModel = new QStringListModel(companies, this);
 }
 
-void SetevikDB::setupTable() {
+void SetevikDB::setupUItoDB() {
 
+    // Companies
+    companyComboBox->setModel(companyModel);
 }
 
 void SetevikDB::showNewSetevikDialog() {
