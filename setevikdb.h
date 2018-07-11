@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include <QtSql>
 
+#include "newsetevikdialog.h"
+
 class SetevikDB : public QWidget
 {
     Q_OBJECT
@@ -46,7 +48,7 @@ private:
     QLineEdit *companyLineEdit;
     QLineEdit *vkLineEdit;
     QPushButton *copySetevikVKButton;
-    QLineEdit *storyLineEdit;
+    QTextEdit *storyTextEdit;
 
     // Model-mapper-delegate
     QSqlRelationalTableModel *model;

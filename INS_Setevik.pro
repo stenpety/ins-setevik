@@ -28,11 +28,13 @@ SOURCES += \
         mainwindow.cpp \
     setevikdb.cpp \
     companiesmgmt.cpp \
-    newcompanydialog.cpp
+    newcompanydialog.cpp \
+    newsetevikdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     setevikdb.h \
     initsetevikdb.h \
     companiesmgmt.h \
-    newcompanydialog.h
+    newcompanydialog.h \
+    newsetevikdialog.h

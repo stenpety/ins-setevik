@@ -61,8 +61,8 @@ void SetevikDB::createUI() {
 
     auto storyLabel = new QLabel(tr("Story"));
     layoutDetails->addWidget(storyLabel, 3, 0);
-    storyLineEdit = new QLineEdit();
-    layoutDetails->addWidget(storyLineEdit, 3, 1);
+    storyTextEdit = new QTextEdit();
+    layoutDetails->addWidget(storyTextEdit, 3, 1);
 
     layoutMain->addLayout(layoutDetails, 1, 1);
 
@@ -78,7 +78,10 @@ void SetevikDB::setupTable() {
 }
 
 void SetevikDB::showNewSetevikDialog() {
-
+    auto *newSetevikDialog = new NewSetevikDialog(this);
+    if (newSetevikDialog->exec()) {
+        //TODO: add new setevik to dn logic
+    }
 }
 
 void SetevikDB::showEditSetevikDialog() {

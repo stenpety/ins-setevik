@@ -1,15 +1,16 @@
-#ifndef NEWCOMPANYDIALOG_H
-#define NEWCOMPANYDIALOG_H
+#ifndef NEWSETEVIKDIALOG_H
+#define NEWSETEVIKDIALOG_H
 
 #include <QWidget>
 #include <QtWidgets>
+#include <QtSql>
 
-class NewCompanyDialog : public QDialog {
+class NewSetevikDialog : public QDialog {
 
     Q_OBJECT
 
 public:
-    explicit NewCompanyDialog(QWidget *parent = nullptr);
+    explicit NewSetevikDialog(QWidget *parent = nullptr);
 
 private:
     void createUI();
@@ -23,8 +24,9 @@ private slots:
 
 public:
     QLineEdit *nameLineEdit;
+    QComboBox *companyComboBox;
     QLineEdit *vkLineEdit;
-    QLineEdit *keyWordLineEdit;
+    QTextEdit *storyTextEdit;
 
     QPushButton *submitButton;
     QPushButton *cancelButton;
@@ -33,4 +35,4 @@ private:
 
 };
 
-#endif // NEWCOMPANYDIALOG_H
+#endif // NEWSETEVIKDIALOG_H
