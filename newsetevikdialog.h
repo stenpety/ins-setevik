@@ -14,6 +14,7 @@ public:
 
 private:
     void createUI();
+    void setupModel();
 
 signals:
 
@@ -32,7 +33,7 @@ public:
     QPushButton *cancelButton;
 
 private:
-
+    QStringListModel *companyModel;
 };
 
 #endif // NEWSETEVIKDIALOG_H

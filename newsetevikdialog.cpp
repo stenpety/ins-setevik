@@ -21,6 +21,8 @@ void NewSetevikDialog::createUI() {
     auto *layoutCompany = new QHBoxLayout();
     auto companyLabel = new QLabel(tr("Company: "));
     companyComboBox = new QComboBox();
+    setupModel();
+    companyComboBox->setModel(companyModel);
     layoutCompany->addWidget(companyLabel);
     layoutCompany->addWidget(companyComboBox);
     layoutMain->addLayout(layoutCompany);
@@ -63,3 +65,12 @@ void NewSetevikDialog::activateSubmitButton() {
                               (vkLineEdit->text().length() > 0) &&
                              (storyTextEdit->toPlainText().length() > 0));
 }
+
+void NewSetevikDialog::setupModel() {
+    QStringList companies;
+    companies << tr("NL") << tr("Armelle");
+    companyModel = new QStringListModel(companies, this);
+}
+
+
+
