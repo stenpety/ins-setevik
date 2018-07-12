@@ -39,7 +39,7 @@ void CompaniesMgmt::setupDb() {
 
     model = new QSqlRelationalTableModel(companyTable);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->setTable("company");
+    model->setTable("companies");
 
     model->setHeaderData(model->fieldIndex("name"), Qt::Horizontal, tr("Company"));
     model->setHeaderData(model->fieldIndex("vk"), Qt::Horizontal, tr("VK Group"));

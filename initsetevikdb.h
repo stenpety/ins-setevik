@@ -2,6 +2,7 @@
 #define INITSETEVIKDB_H
 
 #include <QtSql>
+#include <iostream>
 
 void addCompany(QSqlQuery &query, const QString &companyName, const QString &companyVK,
                 const QString &companyKeyWord) {
@@ -43,7 +44,7 @@ void createTablesDb() {
         qWarning() << "Database create tables ERROR: " << query.lastError().text();
     }
 
-    query.prepare("CREATE TABLE company (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, keyword TEXT)");
+    query.prepare("CREATE TABLE companies (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, keyword TEXT)");
     if (!query.exec()) {
         qWarning() << "Database create tables ERROR: " << query.lastError().text();
     }
@@ -57,6 +58,7 @@ void initiSetevikDB(const QString &dbFileName) {
     // TODO: check tables, NOT file existense
     if (!dbFileExists) {
         createTablesDb();
+        std::cout << "DB tables created" << std::endl;
     }
 }
 

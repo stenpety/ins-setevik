@@ -71,7 +71,7 @@ void NewSetevikDialog::setupModel() {
 
     QStringList companies;
     QSqlQuery query;
-    query.prepare("SELECT name FROM company");
+    query.prepare("SELECT name FROM companies");
     if (!query.exec()) {
         qWarning() << "Companies query ERROR: " << query.lastError().text();
     }
