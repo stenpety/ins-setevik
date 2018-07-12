@@ -92,7 +92,6 @@ void SetevikDB::setupDbModels() {
     setevikModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     setevikModel->setTable("setevik");
 
-    //setevikModel->setRelation(setevikModel->fieldIndex("company"), QSqlRelation("companies", "id", "name"));
     setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
 
     if (!setevikModel->select()) {
@@ -113,7 +112,7 @@ void SetevikDB::setupUItoDB() {
     delegate = new QSqlRelationalDelegate(setevikTable);
     setevikTable->setItemDelegate(delegate);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("id"), true);
-    //setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
+    setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("vk"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("story"), true);
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -144,7 +143,7 @@ void SetevikDB::showNewSetevikDialog() {
         setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
-        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex()+1);
+        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
 
         if (!setevikModel->submitAll()) {
             QMessageBox::critical(this, "Unable to create new Setevik",
@@ -162,14 +161,16 @@ void SetevikDB::showEditSetevikDialog() {
     editSetevikDialog->nameLineEdit->setText(setevikModel->record(rowToEdit).value("name").toString());
     editSetevikDialog->vkLineEdit->setText(setevikModel->record(rowToEdit).value("vk").toString());
     editSetevikDialog->storyTextEdit->setText(setevikModel->record(rowToEdit).value("story").toString());
-    editSetevikDialog->companyComboBox->setCurrentIndex(setevikModel->record(rowToEdit).value("company").toInt()-1);
+    editSetevikDialog->companyComboBox->setCurrentIndex(setevikModel->record(rowToEdit).value("company").toInt());
+
+    //std::cout << "Edit: in company " << setevikModel->record(rowToEdit).value("company").toInt()-1 << std::endl;
 
     if (editSetevikDialog->exec()) {
 
         setevikModel->setData(setevikModel->index(rowToEdit, 1), editSetevikDialog->nameLineEdit->text());
         setevikModel->setData(setevikModel->index(rowToEdit, 2), editSetevikDialog->vkLineEdit->text());
         setevikModel->setData(setevikModel->index(rowToEdit, 3), editSetevikDialog->storyTextEdit->toPlainText());
-        setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->companyComboBox->currentIndex()+1);
+        setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->companyComboBox->currentIndex());
 
         if (!setevikModel->submitAll()) {
             QMessageBox::critical(this, "Unable to edit Setevik",
@@ -177,7 +178,6 @@ void SetevikDB::showEditSetevikDialog() {
             return;
         }
     }
-
 }
 
 void SetevikDB::deleteSetevik() {
@@ -202,7 +202,6 @@ void SetevikDB::deleteSetevik() {
         setevikTable->selectRow(qMax(0, rowToDelete-1));
 
     }
-
 }
 
 void SetevikDB::copySetevikVK() {
@@ -211,8 +210,8 @@ void SetevikDB::copySetevikVK() {
 
 void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
-    nameLineEdit->setText(setevikModel->record(indexRow).value("name").toString());
-    companyLineEdit->setText(setevikModel->record(indexRow).value("company").toString());
-    vkLineEdit->setText(setevikModel->record(indexRow).value("vk").toString());
-    storyTextEdit->setText(setevikModel->record(indexRow).value("story").toString());
+    nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
+    companyLineEdit->setText( companyModel->data(companyModel->index(setevikModel->record(indexRow).value("company").toInt(), 0)).toString() );
+    vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
+    storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }
