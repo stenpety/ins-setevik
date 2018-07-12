@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QtSql>
+#include <iostream>
 
 #include "newsetevikdialog.h"
 

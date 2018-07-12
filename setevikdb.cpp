@@ -92,6 +92,7 @@ void SetevikDB::setupDbModels() {
     setevikModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     setevikModel->setTable("setevik");
 
+    setevikModel->setRelation(setevikModel->fieldIndex("company"), QSqlRelation("company", "id", "name"));
     setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
 
     if (!setevikModel->select()) {
@@ -99,6 +100,7 @@ void SetevikDB::setupDbModels() {
                               "Error creating Setevik table model: " + setevikModel->lastError().text());
         return;
     }
+
 }
 
 void SetevikDB::setupUItoDB() {
@@ -111,7 +113,7 @@ void SetevikDB::setupUItoDB() {
     delegate = new QSqlRelationalDelegate(setevikTable);
     setevikTable->setItemDelegate(delegate);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("id"), true);
-    setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
+    //setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("vk"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("story"), true);
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -143,8 +145,13 @@ void SetevikDB::showNewSetevikDialog() {
         setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
         setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
+        std::cout << "Index: " << newSetevikDialog->companyComboBox->currentIndex() << std::endl;
 
-        setevikModel->submitAll();
+        if (!setevikModel->submitAll()) {
+            QMessageBox::critical(this, "Unable to create new Setevik",
+                                  "Error creating Setevik: " + setevikModel->lastError().text());
+            return;
+        }
     }
 }
 
@@ -165,7 +172,11 @@ void SetevikDB::showEditSetevikDialog() {
         setevikModel->setData(setevikModel->index(rowToEdit, 3), editSetevikDialog->storyTextEdit->toPlainText());
         setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->companyComboBox->currentIndex());
 
-        setevikModel->submitAll();
+        if (!setevikModel->submitAll()) {
+            QMessageBox::critical(this, "Unable to edit Setevik",
+                                  "Error editing Setevik: " + setevikModel->lastError().text());
+            return;
+        }
     }
 
 }
