@@ -30,6 +30,8 @@ private slots:
     void showEditSetevikDialog();
     void deleteSetevik();
 
+    void filterSetevik(const QString &filter);
+
     void copySetevikVK();
 
 public:
@@ -53,13 +55,13 @@ private:
     QLineEdit *companyLineEdit;
     QLineEdit *vkLineEdit;
     QPushButton *copySetevikVKButton;
+    QClipboard *clipboard;
     QTextEdit *storyTextEdit;
 
     // Mapper, Delegate
     QDataWidgetMapper *mapper;
     QSqlRelationalDelegate *delegate;
 
-    QClipboard *clipboard;
 };
 
 #endif // SETEVIKDB_H

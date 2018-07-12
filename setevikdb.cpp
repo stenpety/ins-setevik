@@ -42,6 +42,8 @@ void SetevikDB::createUI() {
     // Company combo-box: 0-1
     companyComboBox = new QComboBox();
     layoutMain->addWidget(companyComboBox, 0, 1);
+    connect(companyComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
+            this, &SetevikDB::filterSetevik);
 
     // Setevik details: 1-1
     auto layoutDetails = new QGridLayout();
@@ -204,6 +206,13 @@ void SetevikDB::deleteSetevik() {
         setevikTable->selectRow(qMax(0, rowToDelete-1));
 
     }
+}
+
+void SetevikDB::filterSetevik(const QString &filter) {
+    /*
+    setevikModel->setFilter("company=" + filter);
+    setevikModel->select();
+    */
 }
 
 void SetevikDB::copySetevikVK() {
