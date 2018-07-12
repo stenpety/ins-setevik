@@ -59,6 +59,7 @@ private:
     QDataWidgetMapper *mapper;
     QSqlRelationalDelegate *delegate;
 
+    QClipboard *clipboard;
 };
 
 #endif // SETEVIKDB_H

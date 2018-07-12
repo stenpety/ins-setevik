@@ -5,6 +5,8 @@ SetevikDB::SetevikDB(QWidget *parent) : QWidget(parent) {
     setWindowTitle("Setevo Personalities");
     createUI();
 
+    clipboard = QGuiApplication::clipboard();
+
     setupDbModels();
     setupUItoDB();
 
@@ -205,7 +207,9 @@ void SetevikDB::deleteSetevik() {
 }
 
 void SetevikDB::copySetevikVK() {
-
+    int selectedRow = mapper->currentIndex();
+    clipboard->setText("[" + setevikModel->record(selectedRow).value("vk").toString() + "|" +
+                       setevikModel->record(selectedRow).value("name").toString() + "]");
 }
 
 void SetevikDB::updateDetails(const QModelIndex &index) {
