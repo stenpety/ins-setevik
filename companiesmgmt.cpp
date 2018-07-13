@@ -12,7 +12,7 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
 
 void CompaniesMgmt::createUI() {
 
-    setMinimumSize(640, 480);
+    setMinimumSize(480, 640);
 
     auto *layoutMain = new QVBoxLayout();
     setLayout(layoutMain);
@@ -36,8 +36,10 @@ void CompaniesMgmt::createUI() {
     layoutMain->addWidget(companyTable);
 
     dismissButton = new QPushButton(tr("&Dismiss"));
+    dismissButton->setMaximumWidth(100);
     connect(dismissButton, &QPushButton::clicked, this, &CompaniesMgmt::dismissWindow);
     layoutMain->addWidget(dismissButton);
+    layoutMain->setAlignment(dismissButton, Qt::AlignRight);
 }
 
 void CompaniesMgmt::setupDb() {
@@ -66,6 +68,7 @@ void CompaniesMgmt::setupTable() {
     companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
     companyTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    companyTable->horizontalHeader()->setStretchLastSection(true);
     companyTable->resizeColumnsToContents();
 
     mapper = new QDataWidgetMapper();
@@ -76,6 +79,7 @@ void CompaniesMgmt::setupTable() {
             mapper, &QDataWidgetMapper::setCurrentModelIndex);
 
     setSelectionInTableModel(0);
+    this->adjustSize();
 }
 
 void CompaniesMgmt::setSelectionInTableModel(const int index) {
@@ -113,7 +117,7 @@ void CompaniesMgmt::showNewCompanyDialog() {
         setSelectionInTableModel(rowToSelect);
         enableButtons(model->rowCount() > 0);
 
-        // TODO: adjust columns width after insertion of a new item
+        companyTable->resizeColumnsToContents();
     }
 }
 
@@ -136,7 +140,7 @@ void CompaniesMgmt::showEditCompanyDialog() {
         int rowToSelect = rowByValue(editCompanyDialog->nameLineEdit->text());
         setSelectionInTableModel(rowToSelect);
 
-        // TODO: adjust columns width after editing an item
+        companyTable->resizeColumnsToContents();
     }
 }
 
@@ -164,6 +168,8 @@ void CompaniesMgmt::deleteCompany() {
             setSelectionInTableModel(-1);
             enableButtons(false);
         }
+
+        companyTable->resizeColumnsToContents();
     }
 }
 
