@@ -24,6 +24,8 @@ private:
     void setSelectionInTableModel(const int index);
     void enableButtons(const bool enbld);
 
+    int rowByValue(const QString &value);
+
 signals:
 
 public slots:

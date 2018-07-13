@@ -55,6 +55,7 @@ void CompaniesMgmt::setupDb() {
                               "Error creating table model: " + model->lastError().text());
         return;
     }
+    model->sort(1, Qt::AscendingOrder);
 }
 
 void CompaniesMgmt::setupTable() {
@@ -87,6 +88,16 @@ void CompaniesMgmt::enableButtons(const bool enbld) {
     deleteButton->setEnabled(enbld);
 }
 
+int CompaniesMgmt::rowByValue(const QString &value) {
+    int i;
+    for (i = 0; i < model->rowCount(); ++i) {
+        if (model->record(i).value("name").toString() == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void CompaniesMgmt::showNewCompanyDialog() {
     auto *newCompanyDialog = new NewCompanyDialog(this, "Add new MLM Company");
     if (newCompanyDialog->exec()) {
@@ -98,8 +109,8 @@ void CompaniesMgmt::showNewCompanyDialog() {
         model->setData(model->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
 
-        // TODO: adjust after sorting
-        setSelectionInTableModel(rowCount);
+        int rowToSelect = rowByValue(newCompanyDialog->nameLineEdit->text());
+        setSelectionInTableModel(rowToSelect);
         enableButtons(model->rowCount() > 0);
 
         // TODO: adjust columns width after insertion of a new item
@@ -122,9 +133,10 @@ void CompaniesMgmt::showEditCompanyDialog() {
         model->setData(model->index(rowToEdit, 3), editCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
 
-        setSelectionInTableModel(rowToEdit);
+        int rowToSelect = rowByValue(editCompanyDialog->nameLineEdit->text());
+        setSelectionInTableModel(rowToSelect);
 
-        // TODO: adjust columns width after insertion of a new item
+        // TODO: adjust columns width after editing an item
     }
 }
 
