@@ -81,6 +81,10 @@ void CompaniesMgmt::showNewCompanyDialog() {
         model->setData(model->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
 
+        // TODO: adjust after sorting
+        mapper->setCurrentIndex(rowCount);
+        companyTable->selectRow(rowCount);
+
         // TODO: adjust columns width after insertion of a new item
     }
 }
@@ -100,6 +104,9 @@ void CompaniesMgmt::showEditCompanyDialog() {
         model->setData(model->index(rowToEdit, 2), editCompanyDialog->vkLineEdit->text());
         model->setData(model->index(rowToEdit, 3), editCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
+
+        mapper->setCurrentIndex(rowToEdit);
+        companyTable->selectRow(rowToEdit);
 
         // TODO: adjust columns width after insertion of a new item
     }
