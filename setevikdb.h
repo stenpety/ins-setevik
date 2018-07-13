@@ -30,7 +30,7 @@ private slots:
     void showEditSetevikDialog();
     void deleteSetevik();
 
-    void filterSetevik(const QString &filter);
+    void filterSetevik(const int filter);
 
     void copySetevikVK();
 

@@ -42,7 +42,7 @@ void SetevikDB::createUI() {
     // Company combo-box: 0-1
     companyComboBox = new QComboBox();
     layoutMain->addWidget(companyComboBox, 0, 1);
-    connect(companyComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
+    connect(companyComboBox, QOverload<const int>::of(&QComboBox::currentIndexChanged),
             this, &SetevikDB::filterSetevik);
 
     // Setevik details: 1-1
@@ -167,8 +167,6 @@ void SetevikDB::showEditSetevikDialog() {
     editSetevikDialog->storyTextEdit->setText(setevikModel->record(rowToEdit).value("story").toString());
     editSetevikDialog->companyComboBox->setCurrentIndex(setevikModel->record(rowToEdit).value("company").toInt());
 
-    //std::cout << "Edit: in company " << setevikModel->record(rowToEdit).value("company").toInt()-1 << std::endl;
-
     if (editSetevikDialog->exec()) {
 
         setevikModel->setData(setevikModel->index(rowToEdit, 1), editSetevikDialog->nameLineEdit->text());
@@ -208,11 +206,8 @@ void SetevikDB::deleteSetevik() {
     }
 }
 
-void SetevikDB::filterSetevik(const QString &filter) {
-    /*
-    setevikModel->setFilter("company=" + filter);
-    setevikModel->select();
-    */
+void SetevikDB::filterSetevik(const int filter) {
+    setevikModel->setFilter("company=" + QString::number(filter));
 }
 
 void SetevikDB::copySetevikVK() {
