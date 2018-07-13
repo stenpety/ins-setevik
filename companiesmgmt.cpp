@@ -107,11 +107,13 @@ void CompaniesMgmt::showEditCompanyDialog() {
 
 void CompaniesMgmt::deleteCompany() {
 
+    int rowToDelete = mapper->currentIndex();
     QMessageBox::StandardButton deleteDialog;
-    deleteDialog = QMessageBox::question(this, "Delete a company", "Are you sure?",
+    QString companyToDelete = model->record(rowToDelete).value(1).toString();
+    deleteDialog = QMessageBox::question(this, "Delete a company", "Delete " + companyToDelete + "?\nAre you sure?",
                                          QMessageBox::Yes|QMessageBox::No);
     if (deleteDialog == QMessageBox::Yes) {
-        int rowToDelete = mapper->currentIndex();
+
 
         if (!(model->removeRow(rowToDelete))) {
             QMessageBox::critical(this, "Unable to delete item",
