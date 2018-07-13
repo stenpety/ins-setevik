@@ -35,6 +35,9 @@ void CompaniesMgmt::createUI() {
     companyTable = new QTableView();
     layoutMain->addWidget(companyTable);
 
+    dismissButton = new QPushButton(tr("&Dismiss"));
+    connect(dismissButton, &QPushButton::clicked, this, &CompaniesMgmt::dismissWindow);
+    layoutMain->addWidget(dismissButton);
 }
 
 void CompaniesMgmt::setupDb() {
@@ -150,4 +153,8 @@ void CompaniesMgmt::deleteCompany() {
             enableButtons(false);
         }
     }
+}
+
+void CompaniesMgmt::dismissWindow() {
+    this->hide();
 }
