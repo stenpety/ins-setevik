@@ -6,6 +6,8 @@ CompaniesMgmt::CompaniesMgmt(QWidget *parent) : QWidget(parent) {
 
     setupDb();
     setupTable();
+
+    enableButtons(model->rowCount() > 0);
 }
 
 void CompaniesMgmt::createUI() {
@@ -77,6 +79,11 @@ void CompaniesMgmt::setSelectionInTableModel(const int index) {
     companyTable->selectRow(index);
 }
 
+void CompaniesMgmt::enableButtons(const bool enbld) {
+    editButton->setEnabled(enbld);
+    deleteButton->setEnabled(enbld);
+}
+
 void CompaniesMgmt::showNewCompanyDialog() {
     auto *newCompanyDialog = new NewCompanyDialog(this, "Add new MLM Company");
     if (newCompanyDialog->exec()) {
@@ -90,6 +97,7 @@ void CompaniesMgmt::showNewCompanyDialog() {
 
         // TODO: adjust after sorting
         setSelectionInTableModel(rowCount);
+        enableButtons(model->rowCount() > 0);
 
         // TODO: adjust columns width after insertion of a new item
     }
@@ -135,6 +143,11 @@ void CompaniesMgmt::deleteCompany() {
         model->submitAll();
         mapper->submit();
 
-        setSelectionInTableModel(qMax(1, rowToDelete-1));
+        if (model->rowCount() > 0) {
+            setSelectionInTableModel(rowToDelete);
+        } else {
+            setSelectionInTableModel(-1);
+            enableButtons(false);
+        }
     }
 }

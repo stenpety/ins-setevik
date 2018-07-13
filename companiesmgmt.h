@@ -22,6 +22,7 @@ private:
     void setupTable();
 
     void setSelectionInTableModel(const int index);
+    void enableButtons(const bool enbld);
 
 signals:
 
