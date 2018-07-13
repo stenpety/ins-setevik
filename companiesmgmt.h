@@ -21,6 +21,8 @@ private:
     void setupDb();
     void setupTable();
 
+    void setSelectionInTableModel(const int index);
+
 signals:
 
 public slots:

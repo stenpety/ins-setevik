@@ -68,6 +68,13 @@ void CompaniesMgmt::setupTable() {
     mapper->setItemDelegate(delegate);
     connect(companyTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
             mapper, &QDataWidgetMapper::setCurrentModelIndex);
+
+    setSelectionInTableModel(0);
+}
+
+void CompaniesMgmt::setSelectionInTableModel(const int index) {
+    mapper->setCurrentIndex(index);
+    companyTable->selectRow(index);
 }
 
 void CompaniesMgmt::showNewCompanyDialog() {
@@ -82,8 +89,7 @@ void CompaniesMgmt::showNewCompanyDialog() {
         model->submitAll();
 
         // TODO: adjust after sorting
-        mapper->setCurrentIndex(rowCount);
-        companyTable->selectRow(rowCount);
+        setSelectionInTableModel(rowCount);
 
         // TODO: adjust columns width after insertion of a new item
     }
@@ -105,8 +111,7 @@ void CompaniesMgmt::showEditCompanyDialog() {
         model->setData(model->index(rowToEdit, 3), editCompanyDialog->keyWordLineEdit->text());
         model->submitAll();
 
-        mapper->setCurrentIndex(rowToEdit);
-        companyTable->selectRow(rowToEdit);
+        setSelectionInTableModel(rowToEdit);
 
         // TODO: adjust columns width after insertion of a new item
     }
@@ -130,7 +135,6 @@ void CompaniesMgmt::deleteCompany() {
         model->submitAll();
         mapper->submit();
 
-        mapper->setCurrentIndex(qMax(1, rowToDelete-1));
-        companyTable->selectRow(qMax(1, rowToDelete-1));
+        setSelectionInTableModel(qMax(1, rowToDelete-1));
     }
 }
