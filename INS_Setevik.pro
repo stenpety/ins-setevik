@@ -29,7 +29,8 @@ SOURCES += \
     setevikdb.cpp \
     companiesmgmt.cpp \
     newcompanydialog.cpp \
-    newsetevikdialog.cpp
+    newsetevikdialog.cpp \
+    seteviktimer.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,4 +38,5 @@ HEADERS += \
     initsetevikdb.h \
     companiesmgmt.h \
     newcompanydialog.h \
-    newsetevikdialog.h
+    newsetevikdialog.h \
+    seteviktimer.h

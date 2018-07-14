@@ -82,6 +82,8 @@ void MainWindow::showSetevikDB() {
 
 void MainWindow::showSetevikTimer() {
 
+    auto *setevikTimer = new SetevikTimer();
+    setevikTimer->show();
 }
 
 void MainWindow::showCompaniesMgmt() {

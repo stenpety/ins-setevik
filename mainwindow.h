@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "setevikdb.h"
+#include "seteviktimer.h"
 #include "companiesmgmt.h"
 
 class MainWindow : public QMainWindow {
