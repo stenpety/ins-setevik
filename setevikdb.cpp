@@ -73,6 +73,13 @@ void SetevikDB::createUI() {
 
     layoutMain->addLayout(layoutDetails, 1, 1);
 
+    // Dismiss button 2-1
+    dismissButton = new QPushButton(tr("Dismiss"));
+    dismissButton->setMaximumWidth(100);
+    connect(dismissButton, &QPushButton::clicked, this, &SetevikDB::dismissWindow);
+    layoutMain->addWidget(dismissButton, 2, 1);
+    layoutMain->setAlignment(dismissButton, Qt::AlignRight);
+
     setLayout(layoutMain);
 }
 
@@ -216,6 +223,10 @@ void SetevikDB::copySetevikVK() {
     int selectedRow = mapper->currentIndex();
     clipboard->setText("[" + setevikModel->record(selectedRow).value("vk").toString() + "|" +
                        setevikModel->record(selectedRow).value("name").toString() + "]");
+}
+
+void SetevikDB::dismissWindow() {
+    this->hide();
 }
 
 void SetevikDB::updateDetails(const QModelIndex &index) {

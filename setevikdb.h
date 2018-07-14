@@ -34,6 +34,8 @@ private slots:
 
     void copySetevikVK();
 
+    void dismissWindow();
+
 public:
 
 private:
@@ -57,6 +59,9 @@ private:
     QPushButton *copySetevikVKButton;
     QClipboard *clipboard;
     QTextEdit *storyTextEdit;
+
+    // 2-1
+    QPushButton *dismissButton;
 
     // Mapper, Delegate
     QDataWidgetMapper *mapper;
