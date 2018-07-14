@@ -80,6 +80,7 @@ void NewSetevikDialog::setupModel() {
         companies <<query.value(0).toString();
     }
     companyModel = new QStringListModel(companies, this);
+    companyModel->sort(1, Qt::AscendingOrder);
 }
 
 

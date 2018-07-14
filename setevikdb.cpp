@@ -90,6 +90,7 @@ void SetevikDB::setupDbModels() {
         companies <<query.value(0).toString();
     }
     companyModel = new QStringListModel(companies, this);
+    companyModel->sort(1, Qt::AscendingOrder);
 
     // Persons
     setevikModel = new QSqlRelationalTableModel(setevikTable);
@@ -103,6 +104,7 @@ void SetevikDB::setupDbModels() {
                               "Error creating Setevik table model: " + setevikModel->lastError().text());
         return;
     }
+
 
 }
 
