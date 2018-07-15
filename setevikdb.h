@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "newsetevikdialog.h"
+#include "newcompanydialog.h"
 
 class SetevikDB : public QWidget
 {
@@ -31,6 +32,7 @@ private slots:
     void deleteSetevik();
 
     void filterSetevik(const int filter);
+    void showNewCompanyDialog();
 
     void copySetevikVK();
 
@@ -51,6 +53,7 @@ private:
     // 0-1
     QComboBox *companyComboBox;
     QStringListModel *companyModel;
+    QPushButton *newCompanyButton;
 
     // 1-1
     QLineEdit *nameLineEdit;

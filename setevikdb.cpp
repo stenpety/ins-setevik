@@ -39,11 +39,19 @@ void SetevikDB::createUI() {
     setevikTable = new QTableView();
     layoutMain->addWidget(setevikTable, 1, 0);
 
-    // Company combo-box: 0-1
+    // Company combo-box and New button: 0-1
+    auto *layoutCompany = new QGridLayout();
     companyComboBox = new QComboBox();
-    layoutMain->addWidget(companyComboBox, 0, 1);
+    layoutCompany->addWidget(companyComboBox, 0, 1);
     connect(companyComboBox, QOverload<const int>::of(&QComboBox::currentIndexChanged),
             this, &SetevikDB::filterSetevik);
+
+    newCompanyButton = new QPushButton(tr("New MLM"));
+    newCompanyButton->setMaximumWidth(100);
+    layoutCompany->addWidget(newCompanyButton, 0, 2);
+    connect(newCompanyButton, &QPushButton::clicked, this, &SetevikDB::showNewCompanyDialog);
+
+    layoutMain->addLayout(layoutCompany, 0, 1);
 
     // Setevik details: 1-1
     auto layoutDetails = new QGridLayout();
@@ -217,6 +225,10 @@ void SetevikDB::deleteSetevik() {
 
 void SetevikDB::filterSetevik(const int filter) {
     setevikModel->setFilter("company=" + QString::number(filter));
+}
+
+void SetevikDB::showNewCompanyDialog() {
+
 }
 
 void SetevikDB::copySetevikVK() {
