@@ -65,7 +65,7 @@ void CompaniesMgmt::setupTable() {
     companyTable->setModel(model);
     delegate = new QSqlRelationalDelegate(companyTable);
     companyTable->setItemDelegate(delegate);
-    //companyTable->setColumnHidden(model->fieldIndex("id"), true);
+    companyTable->setColumnHidden(model->fieldIndex("id"), true);
     companyTable->setSelectionMode(QAbstractItemView::SingleSelection);
     companyTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     companyTable->horizontalHeader()->setStretchLastSection(true);

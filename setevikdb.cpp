@@ -45,7 +45,7 @@ void SetevikDB::createUI() {
     layoutCompany->addWidget(companyComboBox, 0, 1);
 
     // TODO: connect to String value of c-box
-    connect(companyComboBox, QOverload<const int>::of(&QComboBox::currentIndexChanged),
+    connect(companyComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
             this, &SetevikDB::filterSetevik);
 
     newCompanyButton = new QPushButton(tr("New MLM"));
@@ -230,8 +230,20 @@ void SetevikDB::deleteSetevik() {
     }
 }
 
-void SetevikDB::filterSetevik(const int filter) {
-    // TODO: change query by name
+void SetevikDB::filterSetevik(const QString &filterStr) {
+
+    QSqlQuery query;
+    query.prepare("SELECT id FROM companies WHERE name = ?");
+    query.addBindValue(filterStr);
+
+    if (!query.exec()) {
+        qWarning() << "Company ID query ERROR: " << query.lastError().text();
+    }
+
+    int filter = -1;
+    if (query.next()) {
+        filter = query.value(0).toInt();
+    }
     setevikModel->setFilter("company=" + QString::number(filter));
 }
 
@@ -264,7 +276,8 @@ void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
     // TODO: set correct company name
-    //companyLineEdit->setText( companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString() );
+    // companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString()
+    companyLineEdit->setText( setevikModel->record(indexRow).value("company").toString() );
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }
