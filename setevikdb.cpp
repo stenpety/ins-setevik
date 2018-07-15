@@ -104,8 +104,12 @@ void SetevikDB::setupDbModels() {
     while (query.next()) {
         companies <<query.value(0).toString();
     }
-    companyModel = new QStringListModel(companies, this);
-    companyModel->sort(1, Qt::AscendingOrder);
+    companyStringModel = new QStringListModel(companies, this);
+    companyStringModel->sort(1, Qt::AscendingOrder);
+
+    companyModel = new QSqlRelationalTableModel();
+    companyModel->setTable("companies");
+    companyModel->select();
 
     // Persons
     setevikModel = new QSqlRelationalTableModel(setevikTable);
@@ -126,7 +130,7 @@ void SetevikDB::setupDbModels() {
 void SetevikDB::setupUItoDB() {
 
     // Companies
-    companyComboBox->setModel(companyModel);
+    companyComboBox->setModel(companyStringModel);
 
     // Persons
     setevikTable->setModel(setevikModel);
@@ -228,7 +232,16 @@ void SetevikDB::filterSetevik(const int filter) {
 }
 
 void SetevikDB::showNewCompanyDialog() {
+    auto *newCompanyDialog = new NewCompanyDialog(this, "Add new MLM Company");
+    if (newCompanyDialog->exec()) {
 
+        int rowCount = companyModel->rowCount();
+        companyModel->insertRows(rowCount, 1);
+        companyModel->setData(companyModel->index(rowCount, 1), newCompanyDialog->nameLineEdit->text());
+        companyModel->setData(companyModel->index(rowCount, 2), newCompanyDialog->vkLineEdit->text());
+        companyModel->setData(companyModel->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
+        companyModel->submitAll();
+    }
 }
 
 void SetevikDB::copySetevikVK() {
@@ -244,7 +257,7 @@ void SetevikDB::dismissWindow() {
 void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
-    companyLineEdit->setText( companyModel->data(companyModel->index(setevikModel->record(indexRow).value("company").toInt(), 0)).toString() );
+    companyLineEdit->setText( companyStringModel->data(companyStringModel->index(setevikModel->record(indexRow).value("company").toInt(), 0)).toString() );
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }

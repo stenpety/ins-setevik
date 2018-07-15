@@ -52,7 +52,8 @@ private:
 
     // 0-1
     QComboBox *companyComboBox;
-    QStringListModel *companyModel;
+    QStringListModel *companyStringModel;
+    QSqlRelationalTableModel *companyModel;
     QPushButton *newCompanyButton;
 
     // 1-1
