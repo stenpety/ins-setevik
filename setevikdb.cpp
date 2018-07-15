@@ -168,7 +168,9 @@ void SetevikDB::showNewSetevikDialog() {
         setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
-        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
+        //setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
+        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->getCompanyId() );
+        std::cout << "Company ID: " << newSetevikDialog->getCompanyId() << std::endl;
 
         if (!setevikModel->submitAll()) {
             QMessageBox::critical(this, "Unable to create new Setevik",
@@ -257,7 +259,10 @@ void SetevikDB::dismissWindow() {
 void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
-    companyLineEdit->setText( companyStringModel->data(companyStringModel->index(setevikModel->record(indexRow).value("company").toInt(), 0)).toString() );
+    companyLineEdit->setText( companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString() );
+    //std::cout << "VALUE company: " << setevikModel->record(indexRow).value("company").toInt() << std::endl;
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }
+
+

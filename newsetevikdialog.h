@@ -12,6 +12,7 @@ class NewSetevikDialog : public QDialog {
 public:
     explicit NewSetevikDialog(QWidget *parent = nullptr,
                               const QString &title = "Add new");
+    int getCompanyId() const;
 
 private:
     void createUI();

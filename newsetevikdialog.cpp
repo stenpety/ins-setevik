@@ -6,6 +6,18 @@ NewSetevikDialog::NewSetevikDialog(QWidget *parent, const QString &title) : QDia
     createUI();
 }
 
+int NewSetevikDialog::getCompanyId() const {
+
+    QSqlQuery query;
+    query.prepare("SELECT id FROM companies WHERE name = ?");
+    query.addBindValue(companyComboBox->currentData().toString());
+    if (!query.exec()) {
+        qWarning() << "Company ID query ERROR: " << query.lastError().text();
+    }
+
+    return query.value(0).toInt();
+}
+
 void NewSetevikDialog::createUI() {
     auto *layoutMain = new QVBoxLayout();
     setLayout(layoutMain);
@@ -77,7 +89,7 @@ void NewSetevikDialog::setupModel() {
     }
 
     while (query.next()) {
-        companies <<query.value(0).toString();
+        companies << query.value(0).toString();
     }
     companyModel = new QStringListModel(companies, this);
     companyModel->sort(1, Qt::AscendingOrder);
