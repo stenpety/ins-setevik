@@ -43,6 +43,8 @@ void SetevikDB::createUI() {
     auto *layoutCompany = new QGridLayout();
     companyComboBox = new QComboBox();
     layoutCompany->addWidget(companyComboBox, 0, 1);
+
+    // TODO: connect to String value of c-box
     connect(companyComboBox, QOverload<const int>::of(&QComboBox::currentIndexChanged),
             this, &SetevikDB::filterSetevik);
 
@@ -165,9 +167,9 @@ void SetevikDB::showNewSetevikDialog() {
         int rowCount = setevikModel->rowCount();
         setevikModel->insertRows(rowCount, 1);
 
-        setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text());
-        setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
-        setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
+        setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText() );
         setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->getCompanyId() );
 
         if (!setevikModel->submitAll()) {
@@ -190,10 +192,10 @@ void SetevikDB::showEditSetevikDialog() {
 
     if (editSetevikDialog->exec()) {
 
-        setevikModel->setData(setevikModel->index(rowToEdit, 1), editSetevikDialog->nameLineEdit->text());
-        setevikModel->setData(setevikModel->index(rowToEdit, 2), editSetevikDialog->vkLineEdit->text());
-        setevikModel->setData(setevikModel->index(rowToEdit, 3), editSetevikDialog->storyTextEdit->toPlainText());
-        setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->companyComboBox->currentIndex());
+        setevikModel->setData(setevikModel->index(rowToEdit, 1), editSetevikDialog->nameLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowToEdit, 2), editSetevikDialog->vkLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowToEdit, 3), editSetevikDialog->storyTextEdit->toPlainText() );
+        setevikModel->setData(setevikModel->index(rowToEdit, 4), editSetevikDialog->getCompanyId() );
 
         if (!setevikModel->submitAll()) {
             QMessageBox::critical(this, "Unable to edit Setevik",
@@ -221,6 +223,7 @@ void SetevikDB::deleteSetevik() {
         setevikModel->submitAll();
         mapper->submit();
 
+        // TODO: Remove selection if none left
         mapper->setCurrentIndex(qMax(0, rowToDelete-1));
         setevikTable->selectRow(qMax(0, rowToDelete-1));
 
@@ -228,6 +231,7 @@ void SetevikDB::deleteSetevik() {
 }
 
 void SetevikDB::filterSetevik(const int filter) {
+    // TODO: change query by name
     setevikModel->setFilter("company=" + QString::number(filter));
 }
 
@@ -242,6 +246,8 @@ void SetevikDB::showNewCompanyDialog() {
         companyModel->setData(companyModel->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         companyModel->submitAll();
     }
+
+    // TODO: update show model for c-box
 }
 
 void SetevikDB::copySetevikVK() {
@@ -257,8 +263,8 @@ void SetevikDB::dismissWindow() {
 void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
-    companyLineEdit->setText( companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString() );
-    //std::cout << "VALUE company: " << setevikModel->record(indexRow).value("company").toInt() << std::endl;
+    // TODO: set correct company name
+    //companyLineEdit->setText( companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString() );
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }
