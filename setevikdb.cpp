@@ -168,9 +168,7 @@ void SetevikDB::showNewSetevikDialog() {
         setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text());
         setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText());
-        //setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->companyComboBox->currentIndex());
         setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->getCompanyId() );
-        std::cout << "Company ID: " << newSetevikDialog->getCompanyId() << std::endl;
 
         if (!setevikModel->submitAll()) {
             QMessageBox::critical(this, "Unable to create new Setevik",

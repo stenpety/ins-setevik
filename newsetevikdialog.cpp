@@ -10,12 +10,18 @@ int NewSetevikDialog::getCompanyId() const {
 
     QSqlQuery query;
     query.prepare("SELECT id FROM companies WHERE name = ?");
-    query.addBindValue(companyComboBox->currentData().toString());
+    query.addBindValue(companyComboBox->currentText());
+    std::cout << "Company from dialog/c-box: " << companyComboBox->currentText().toStdString() << std::endl;
+
     if (!query.exec()) {
         qWarning() << "Company ID query ERROR: " << query.lastError().text();
     }
 
-    return query.value(0).toInt();
+    if (query.next()) {
+        return query.value(0).toInt();
+    }
+
+    return -1;
 }
 
 void NewSetevikDialog::createUI() {

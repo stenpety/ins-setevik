@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include <QtSql>
 
+#include <iostream>
+
 class NewSetevikDialog : public QDialog {
 
     Q_OBJECT
