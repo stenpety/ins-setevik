@@ -129,7 +129,7 @@ void SetevikDB::setupUItoDB() {
     setevikTable->setColumnHidden(setevikModel->fieldIndex("story"), true);
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    setevikTable->resizeColumnsToContents();
+    setevikTable->horizontalHeader()->setStretchLastSection(true);
     if (setevikModel->rowCount() > 0) {
         setevikTable->selectRow(0);
     }
