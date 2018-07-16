@@ -21,6 +21,7 @@ private:
     void setupUItoDB();
 
     void updateDetails(const QModelIndex &index);
+    const QString getCompanyName(const int companyCode);
 
 signals:
 

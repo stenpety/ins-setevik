@@ -277,9 +277,24 @@ void SetevikDB::updateDetails(const QModelIndex &index) {
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
     // TODO: set correct company name
     // companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString()
-    companyLineEdit->setText( setevikModel->record(indexRow).value("company").toString() );
+    companyLineEdit->setText( getCompanyName( setevikModel->record(indexRow).value("company").toInt()) );
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
 }
 
+const QString SetevikDB::getCompanyName(const int companyCode) {
 
+    QSqlQuery query;
+    query.prepare("SELECT name FROM companies WHERE id = ?");
+    query.addBindValue(QString::number(companyCode));
+
+    if (!query.exec()) {
+        qWarning() << "getCompany by ID query ERROR: " << query.lastError().text();
+    }
+
+    if (query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";
+}
