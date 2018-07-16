@@ -5,7 +5,7 @@
 #include <QtWidgets>
 #include <QtSql>
 
-class SetevikTimer : public QWidget {
+class SetevikTimer : public QMainWindow {
 
     Q_OBJECT
 

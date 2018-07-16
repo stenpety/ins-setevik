@@ -1,6 +1,6 @@
 #include "seteviktimer.h"
 
-SetevikTimer::SetevikTimer(QWidget *parent) : QWidget(parent) {
+SetevikTimer::SetevikTimer(QWidget *parent) : QMainWindow(parent) {
     createUI();
 
 
@@ -8,7 +8,10 @@ SetevikTimer::SetevikTimer(QWidget *parent) : QWidget(parent) {
 
 void SetevikTimer::createUI() {
 
-    setMinimumSize(640, 480);
+    auto *content = new QWidget();
+    setCentralWidget(content);
+
+    setMinimumSize(320, 240);
     setWindowTitle("Setevik Timer");
 
     auto *layoutMain = new QGridLayout;
@@ -22,7 +25,7 @@ void SetevikTimer::createUI() {
     connect(dismissButton, &QPushButton::clicked, this, &SetevikTimer::dismissWindow);
     layoutMain->addWidget(dismissButton, 1, 1);
 
-    this->setLayout(layoutMain);
+    content->setLayout(layoutMain);
 
 }
 

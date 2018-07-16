@@ -43,8 +43,6 @@ void SetevikDB::createUI() {
     auto *layoutCompany = new QGridLayout();
     companyComboBox = new QComboBox();
     layoutCompany->addWidget(companyComboBox, 0, 1);
-
-    // TODO: connect to String value of c-box
     connect(companyComboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged),
             this, &SetevikDB::filterSetevik);
 

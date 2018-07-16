@@ -82,7 +82,7 @@ void MainWindow::showSetevikDB() {
 
 void MainWindow::showSetevikTimer() {
 
-    auto *setevikTimer = new SetevikTimer();
+    auto *setevikTimer = new SetevikTimer(this);
     setevikTimer->show();
 }
 
