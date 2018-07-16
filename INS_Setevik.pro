@@ -40,3 +40,5 @@ HEADERS += \
     newcompanydialog.h \
     newsetevikdialog.h \
     seteviktimer.h
+
+ICON = ins_setevik.icns
