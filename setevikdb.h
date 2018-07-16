@@ -20,6 +20,8 @@ private:
     void setupDbModels();
     void setupUItoDB();
 
+    void updateCompanyList();
+
     void updateDetails(const QModelIndex &index);
     const QString getCompanyName(const int companyCode);
 

@@ -96,22 +96,7 @@ void SetevikDB::createUI() {
 void SetevikDB::setupDbModels() {
 
     // Companies
-    QStringList companies;
-    QSqlQuery query;
-    query.prepare("SELECT name FROM companies");
-    if (!query.exec()) {
-        qWarning() << "Companies query ERROR: " << query.lastError().text();
-    }
-
-    while (query.next()) {
-        companies <<query.value(0).toString();
-    }
-    companyStringModel = new QStringListModel(companies, this);
-    companyStringModel->sort(1, Qt::AscendingOrder);
-
-    companyModel = new QSqlRelationalTableModel();
-    companyModel->setTable("companies");
-    companyModel->select();
+    updateCompanyList();
 
     // Persons
     setevikModel = new QSqlRelationalTableModel(setevikTable);
@@ -158,6 +143,26 @@ void SetevikDB::setupUItoDB() {
     connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &SetevikDB::updateDetails);
     updateDetails(setevikTable->selectionModel()->currentIndex());
+}
+
+void SetevikDB::updateCompanyList() {
+
+    QStringList companies;
+    QSqlQuery query;
+    query.prepare("SELECT name FROM companies");
+    if (!query.exec()) {
+        qWarning() << "Companies query ERROR: " << query.lastError().text();
+    }
+
+    while (query.next()) {
+        companies <<query.value(0).toString();
+    }
+    companyStringModel = new QStringListModel(companies, this);
+    companyStringModel->sort(1, Qt::AscendingOrder);
+
+    companyModel = new QSqlRelationalTableModel();
+    companyModel->setTable("companies");
+    companyModel->select();
 }
 
 void SetevikDB::showNewSetevikDialog() {
@@ -259,7 +264,8 @@ void SetevikDB::showNewCompanyDialog() {
         companyModel->submitAll();
     }
 
-    // TODO: update show model for c-box
+    updateCompanyList();
+    companyComboBox->setModel(companyStringModel);
 }
 
 void SetevikDB::copySetevikVK() {
@@ -275,8 +281,6 @@ void SetevikDB::dismissWindow() {
 void SetevikDB::updateDetails(const QModelIndex &index) {
     int indexRow = index.row();
     nameLineEdit->setText( setevikModel->record(indexRow).value("name").toString() );
-    // TODO: set correct company name
-    // companyModel->record(setevikModel->record(indexRow).value("company").toInt()).value("name").toString()
     companyLineEdit->setText( getCompanyName( setevikModel->record(indexRow).value("company").toInt()) );
     vkLineEdit->setText( setevikModel->record(indexRow).value("vk").toString() );
     storyTextEdit->setText( setevikModel->record(indexRow).value("story").toString() );
