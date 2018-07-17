@@ -266,6 +266,11 @@ void SetevikDB::showNewCompanyDialog() {
     companyComboBox->setModel(companyStringModel);
 }
 
+void SetevikDB::enableButtons(const bool enbld) {
+    editButton->setEnabled(enbld);
+    deleteButton->setEnabled(enbld);
+}
+
 void SetevikDB::copySetevikVK() {
     int selectedRow = mapper->currentIndex();
     clipboard->setText("[" + setevikModel->record(selectedRow).value("vk").toString() + "|" +

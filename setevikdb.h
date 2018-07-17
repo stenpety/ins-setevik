@@ -36,6 +36,7 @@ private slots:
 
     void filterSetevik(const QString &filterStr);
     void showNewCompanyDialog();
+    void enableButtons(const bool enbld);
 
     void copySetevikVK();
 
