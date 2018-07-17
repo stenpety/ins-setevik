@@ -165,6 +165,8 @@ void SetevikDB::updateCompanyList() {
 
 void SetevikDB::showNewSetevikDialog() {
     auto *newSetevikDialog = new NewSetevikDialog(this, "Add new Setevik");
+    newSetevikDialog->companyComboBox->setCurrentIndex(companyComboBox->currentIndex());
+
     if (newSetevikDialog->exec()) {
 
         int rowCount = setevikModel->rowCount();
@@ -191,7 +193,7 @@ void SetevikDB::showEditSetevikDialog() {
     editSetevikDialog->nameLineEdit->setText(setevikModel->record(rowToEdit).value("name").toString());
     editSetevikDialog->vkLineEdit->setText(setevikModel->record(rowToEdit).value("vk").toString());
     editSetevikDialog->storyTextEdit->setText(setevikModel->record(rowToEdit).value("story").toString());
-    editSetevikDialog->companyComboBox->setCurrentIndex(setevikModel->record(rowToEdit).value("company").toInt());
+    editSetevikDialog->companyComboBox->setCurrentIndex(companyComboBox->currentIndex());
 
     if (editSetevikDialog->exec()) {
 
