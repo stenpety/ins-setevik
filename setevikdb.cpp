@@ -3,6 +3,8 @@
 SetevikDB::SetevikDB(QWidget *parent) : QWidget(parent) {
 
     setWindowTitle("Setevo Personalities");
+
+    mapper = new QDataWidgetMapper();
     createUI();
 
     clipboard = QGuiApplication::clipboard();
@@ -129,7 +131,7 @@ void SetevikDB::setupUItoDB() {
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->horizontalHeader()->setStretchLastSection(true);
 
-    mapper = new QDataWidgetMapper();
+
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     mapper->setModel(setevikModel);
     mapper->setItemDelegate(delegate);
@@ -251,6 +253,10 @@ void SetevikDB::filterSetevik(const QString &filterStr) {
         filter = query.value(0).toInt();
     }
     setevikModel->setFilter("company=" + QString::number(filter));
+
+    if (setevikModel->rowCount() > 0) {
+        setSelectionInTableModel(0);
+    }
 }
 
 void SetevikDB::showNewCompanyDialog() {
