@@ -256,6 +256,9 @@ void SetevikDB::filterSetevik(const QString &filterStr) {
 
     if (setevikModel->rowCount() > 0) {
         setSelectionInTableModel(0);
+        enableButtons(true);
+    } else {
+        enableButtons(false);
     }
 }
 
