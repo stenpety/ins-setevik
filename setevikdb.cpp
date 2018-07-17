@@ -128,9 +128,6 @@ void SetevikDB::setupUItoDB() {
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->horizontalHeader()->setStretchLastSection(true);
-    if (setevikModel->rowCount() > 0) {
-        setevikTable->selectRow(0);
-    }
 
     mapper = new QDataWidgetMapper();
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
@@ -141,6 +138,10 @@ void SetevikDB::setupUItoDB() {
     connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &SetevikDB::updateDetails);
     updateDetails(setevikTable->selectionModel()->currentIndex());
+
+    if (setevikModel->rowCount() > 0) {
+        setSelectionInTableModel(0);
+    }
 }
 
 void SetevikDB::updateCompanyList() {
@@ -271,6 +272,11 @@ void SetevikDB::showNewCompanyDialog() {
 void SetevikDB::enableButtons(const bool enbld) {
     editButton->setEnabled(enbld);
     deleteButton->setEnabled(enbld);
+}
+
+void SetevikDB::setSelectionInTableModel(const int index) {
+    mapper->setCurrentIndex(index);
+    setevikTable->selectRow(index);
 }
 
 void SetevikDB::copySetevikVK() {
