@@ -24,6 +24,7 @@ private:
 
     void updateDetails(const QModelIndex &index);
     const QString getCompanyName(const int companyCode);
+    int rowByValue(const QString name);
 
 signals:
 

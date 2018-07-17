@@ -185,6 +185,8 @@ void SetevikDB::showNewSetevikDialog() {
                                   "Error creating Setevik: " + setevikModel->lastError().text());
             return;
         }
+
+        enableButtons(true);
     }
 }
 
@@ -235,6 +237,7 @@ void SetevikDB::deleteSetevik() {
         mapper->setCurrentIndex(qMax(0, rowToDelete-1));
         setevikTable->selectRow(qMax(0, rowToDelete-1));
 
+        enableButtons(setevikModel->rowCount() > 0);
     }
 }
 
@@ -321,4 +324,15 @@ const QString SetevikDB::getCompanyName(const int companyCode) {
     }
 
     return "";
+}
+
+int SetevikDB::rowByValue(const QString name) {
+    int i;
+    for (i = 0; i < setevikModel->rowCount(); ++i) {
+        if (setevikModel->record(i).value("name").toString() == name) {
+            return i;
+        }
+    }
+
+    return -1;
 }
