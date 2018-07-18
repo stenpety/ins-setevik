@@ -278,10 +278,12 @@ void SetevikDB::showNewCompanyDialog() {
         companyModel->setData(companyModel->index(rowCount, 2), newCompanyDialog->vkLineEdit->text());
         companyModel->setData(companyModel->index(rowCount, 3), newCompanyDialog->keyWordLineEdit->text());
         companyModel->submitAll();
-    }
 
-    updateCompanyList();
-    companyComboBox->setModel(companyStringModel);
+
+        updateCompanyList();
+        companyComboBox->setModel(companyStringModel);
+        companyComboBox->setCurrentText(newCompanyDialog->nameLineEdit->text());
+    }
 }
 
 void SetevikDB::enableButtons(const bool enbld) {
