@@ -218,13 +218,15 @@ void SetevikDB::showEditSetevikDialog() {
 }
 
 void SetevikDB::deleteSetevik() {
+
+    int rowToDelete = mapper->currentIndex();
+    QString setevikToDelete = setevikModel->record(rowToDelete).value("name").toString();
+
     QMessageBox::StandardButton deleteDialog;
-    deleteDialog = QMessageBox::question(this, "Delete Setevik", "Are you sure?",
+    deleteDialog = QMessageBox::question(this, "Delete Setevik", "Delete " + setevikToDelete + "?\nAre you sure?",
                           QMessageBox::Yes|QMessageBox::No);
 
     if (deleteDialog == QMessageBox::Yes) {
-
-        int rowToDelete = mapper->currentIndex();
 
         if (!setevikModel->removeRow(rowToDelete)) {
             QMessageBox::critical(this, "Unable to delete item",
