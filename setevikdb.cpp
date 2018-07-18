@@ -265,6 +265,7 @@ void SetevikDB::filterSetevik(const QString &filterStr) {
         enableButtons(true);
     } else {
         enableButtons(false);
+        clearDetailsFields();
     }
 }
 
@@ -340,4 +341,12 @@ int SetevikDB::rowByValue(const QString name) {
     }
 
     return -1;
+}
+
+void SetevikDB::clearDetailsFields() {
+    nameLineEdit->setText("");
+    nameLineEdit->setPlaceholderText("No records yet");
+    companyLineEdit->setText("");
+    vkLineEdit->setText("");
+    storyTextEdit->setText("");
 }
