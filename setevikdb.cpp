@@ -61,16 +61,19 @@ void SetevikDB::createUI() {
     auto nameLabel = new QLabel(tr("Name"));
     layoutDetails->addWidget(nameLabel, 0, 0);
     nameLineEdit = new QLineEdit();
+    nameLineEdit->setReadOnly(true);
     layoutDetails->addWidget(nameLineEdit, 0, 1);
 
     auto companyLabel = new QLabel(tr("Company"));
     layoutDetails->addWidget(companyLabel, 1, 0);
     companyLineEdit = new QLineEdit();
+    companyLineEdit->setReadOnly(true);
     layoutDetails->addWidget(companyLineEdit, 1, 1);
 
     auto vkLabel = new QLabel(tr("VK profile"));
     layoutDetails->addWidget(vkLabel, 2, 0);
     vkLineEdit = new QLineEdit();
+    vkLineEdit->setReadOnly(true);
     layoutDetails->addWidget(vkLineEdit, 2, 1);
     copySetevikVKButton = new QPushButton(tr("Copy"));
     connect(copySetevikVKButton, &QPushButton::clicked, this, &SetevikDB::copySetevikVK);
@@ -79,6 +82,7 @@ void SetevikDB::createUI() {
     auto storyLabel = new QLabel(tr("Story"));
     layoutDetails->addWidget(storyLabel, 3, 0);
     storyTextEdit = new QTextEdit();
+    storyTextEdit->setReadOnly(true);
     layoutDetails->addWidget(storyTextEdit, 3, 1);
 
     layoutMain->addLayout(layoutDetails, 1, 1);
