@@ -237,10 +237,12 @@ void SetevikDB::deleteSetevik() {
         setevikModel->submitAll();
         mapper->submit();
 
-        // TODO: Remove selection if none left
         setSelectionInTableModel(qMax(0, rowToDelete-1));
 
-        enableButtons(setevikModel->rowCount() > 0);
+        if (setevikModel->rowCount() <= 0) {
+            enableButtons(false);
+            clearDetailsFields();
+        }
     }
 }
 
