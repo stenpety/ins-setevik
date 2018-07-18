@@ -187,6 +187,7 @@ void SetevikDB::showNewSetevikDialog() {
         }
 
         enableButtons(true);
+        setSelectionInTableModel(rowByValue(newSetevikDialog->nameLineEdit->text()));
     }
 }
 
@@ -212,6 +213,7 @@ void SetevikDB::showEditSetevikDialog() {
                                   "Error editing Setevik: " + setevikModel->lastError().text());
             return;
         }
+        setSelectionInTableModel(rowByValue(editSetevikDialog->nameLineEdit->text()));
     }
 }
 
@@ -234,8 +236,7 @@ void SetevikDB::deleteSetevik() {
         mapper->submit();
 
         // TODO: Remove selection if none left
-        mapper->setCurrentIndex(qMax(0, rowToDelete-1));
-        setevikTable->selectRow(qMax(0, rowToDelete-1));
+        setSelectionInTableModel(qMax(0, rowToDelete-1));
 
         enableButtons(setevikModel->rowCount() > 0);
     }
