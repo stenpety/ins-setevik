@@ -1,6 +1,7 @@
 #include "seteviktimer.h"
 
 SetevikTimer::SetevikTimer(QWidget *parent) : QMainWindow(parent) {
+    setWindowTitle("Setevik Timer");
     createUI();
 
 
@@ -12,7 +13,7 @@ void SetevikTimer::createUI() {
     setCentralWidget(content);
 
     setMinimumSize(320, 240);
-    setWindowTitle("Setevik Timer");
+
 
     auto *layoutMain = new QGridLayout;
 

@@ -1,16 +1,16 @@
-#ifndef SETEVIKTIMER_H
-#define SETEVIKTIMER_H
+#ifndef CLOSEPUBLIC_H
+#define CLOSEPUBLIC_H
 
 #include <QWidget>
 #include <QtWidgets>
 #include <QtSql>
 
-class SetevikTimer : public QMainWindow {
+class ClosePublic : public QWidget {
 
     Q_OBJECT
 
 public:
-    explicit SetevikTimer(QWidget *parent = nullptr);
+    explicit ClosePublic(QWidget *parent = nullptr);
 
 private:
     void createUI();
@@ -29,4 +29,4 @@ private:
 
 };
 
-#endif // SETEVIKTIMER_H
+#endif // CLOSEPUBLIC_H

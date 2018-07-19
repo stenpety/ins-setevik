@@ -20,7 +20,7 @@ void MainWindow::createUI() {
     content->setLayout(layoutMain);
 
     closePublicButton = new QPushButton(tr("Close public"));
-    closePublicButton->setEnabled(false);
+    closePublicButton->setEnabled(true);
     connect(closePublicButton, &QPushButton::clicked, this, &MainWindow::showClosePublic);
     layoutMain->addWidget(closePublicButton);
 
@@ -70,8 +70,8 @@ void MainWindow::createMenu() {
 
 
 void MainWindow::showClosePublic() {
-
-
+    auto *closePublic = new ClosePublic();
+    closePublic->show();
 }
 
 void MainWindow::showSetevikDB() {

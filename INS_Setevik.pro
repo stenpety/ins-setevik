@@ -31,7 +31,8 @@ SOURCES += \
     newcompanydialog.cpp \
     newsetevikdialog.cpp \
     seteviktimer.cpp \
-    about.cpp
+    about.cpp \
+    closepublic.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,6 +42,7 @@ HEADERS += \
     newcompanydialog.h \
     newsetevikdialog.h \
     seteviktimer.h \
-    about.h
+    about.h \
+    closepublic.h
 
 ICON = ins_setevik.icns

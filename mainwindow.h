@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include <iostream>
 
+#include "closepublic.h"
 #include "setevikdb.h"
 #include "seteviktimer.h"
 #include "companiesmgmt.h"
