@@ -92,6 +92,6 @@ void MainWindow::showCompaniesMgmt() {
 }
 
 void MainWindow::showAbout() {
-    QMessageBox::about(this, "About INS Setevik",
-                       "KangaSoft\nProudly made in Melbourne, Australia\n2018");
+    auto *about = new About(this);
+    about->show();
 }

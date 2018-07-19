@@ -8,6 +8,7 @@
 #include "setevikdb.h"
 #include "seteviktimer.h"
 #include "companiesmgmt.h"
+#include "about.h"
 
 class MainWindow : public QMainWindow {
 
