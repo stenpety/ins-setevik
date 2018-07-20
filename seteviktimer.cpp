@@ -14,17 +14,35 @@ void SetevikTimer::createUI() {
 
     setMinimumSize(320, 240);
 
-
     auto *layoutMain = new QGridLayout;
 
-    auto *test = new QLabel("TEST");
-    layoutMain->addWidget(test, 0, 0);
+    // 0-0
+    auto *layoutButtons = new QHBoxLayout();
 
+    auto *newButton = new QPushButton(tr("New Timer"));
+    connect(newButton, &QPushButton::clicked, this, &SetevikTimer::showNewTimerDialog);
+    layoutButtons->addWidget(newButton);
 
+    auto *editButton = new QPushButton(tr("Edit Timer"));
+    connect(editButton, &QPushButton::clicked, this, &SetevikTimer::showEditTimerDialog);
+    layoutButtons->addWidget(editButton);
+
+    auto *deleteButton = new QPushButton(tr("Delete Timer"));
+    connect(deleteButton, &QPushButton::clicked, this, &SetevikTimer::deleteTimer);
+    layoutButtons->addWidget(deleteButton);
+
+    layoutMain->addLayout(layoutButtons, 0, 0);
+
+    // 1-0
+    auto timerTable = new QTableView();
+    layoutMain->addWidget(timerTable, 1, 0);
+
+    // 2-0
     dismissButton = new QPushButton(tr("Dismiss"));
     dismissButton->setMaximumWidth(100);
     connect(dismissButton, &QPushButton::clicked, this, &SetevikTimer::dismissWindow);
-    layoutMain->addWidget(dismissButton, 1, 1);
+    layoutMain->setAlignment(Qt::AlignRight);
+    layoutMain->addWidget(dismissButton, 2, 0);
 
     content->setLayout(layoutMain);
 
@@ -32,4 +50,16 @@ void SetevikTimer::createUI() {
 
 void SetevikTimer::dismissWindow() {
     this->hide();
+}
+
+void SetevikTimer::showNewTimerDialog() {
+
+}
+
+void SetevikTimer::showEditTimerDialog() {
+
+}
+
+void SetevikTimer::deleteTimer() {
+
 }
