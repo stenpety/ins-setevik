@@ -5,6 +5,8 @@
 #include <QtWidgets>
 #include <QtSql>
 
+#include "newtimerdialog.h"
+
 class SetevikTimer : public QMainWindow {
 
     Q_OBJECT

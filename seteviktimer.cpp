@@ -48,18 +48,20 @@ void SetevikTimer::createUI() {
 
 }
 
-void SetevikTimer::dismissWindow() {
-    this->hide();
-}
-
 void SetevikTimer::showNewTimerDialog() {
-
+    auto newTimerDialog = new NewTimerDialog(this, "New Timer");
+    newTimerDialog->exec();
 }
 
 void SetevikTimer::showEditTimerDialog() {
-
+    auto editTimerDialog = new NewTimerDialog(this, "Edit Timer");
+    editTimerDialog->exec();
 }
 
 void SetevikTimer::deleteTimer() {
 
+}
+
+void SetevikTimer::dismissWindow() {
+    this->hide();
 }
