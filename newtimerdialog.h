@@ -25,15 +25,14 @@ public slots:
 private slots:
 
 
-    void dismissWindow();
-
 public:
 
 private:
 
 
-    QPushButton *dismissButton;
 
+    QPushButton *submitButton;
+    QPushButton *cancelButton;
 };
 
 #endif // NEWTIMERDIALOG_H

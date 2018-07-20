@@ -9,13 +9,27 @@ void NewTimerDialog::createUI() {
 
     auto *layoutMain = new QHBoxLayout();
 
-    auto *dismissButton = new QPushButton(tr("Dismiss"));
-    connect(dismissButton, &QPushButton::clicked, this, &NewTimerDialog::dismissWindow);
-    layoutMain->addWidget(dismissButton);
+    auto layoutLeft = new QVBoxLayout();
 
+    // table and new setevik button
+
+    auto layoutRight = new QGridLayout();
+
+    // Buttons - 4-1
+    auto *layoutButtons = new QHBoxLayout();
+
+    auto *submitButton = new QPushButton(tr("Submit"));
+    submitButton->setEnabled(false);
+    connect(submitButton, &QPushButton::clicked, this, &QDialog::accept);
+    layoutButtons->addWidget(submitButton);
+
+    auto *cancelButton = new QPushButton(tr("Cancel"));
+    connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    layoutButtons->addWidget(cancelButton);
+
+    layoutRight->addLayout(layoutButtons, 4, 1);
+
+    layoutMain->addLayout(layoutLeft);
+    layoutMain->addLayout(layoutRight);
     setLayout(layoutMain);
-}
-
-void NewTimerDialog::dismissWindow() {
-    this->hide();
 }
