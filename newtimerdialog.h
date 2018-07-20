@@ -16,6 +16,7 @@ public:
 private:
     void createUI();
 
+
 signals:
 
 public slots:
@@ -23,13 +24,20 @@ public slots:
 
 
 private slots:
+    void showNewSetevikDialog();
 
+    void activateSubmitButton();
 
 public:
 
 private:
+    QTableView *setevikTable;
+    QPushButton *newSetevikButton;
 
-
+    QLineEdit *startDateLineEdit;
+    QLineEdit *durationLineEdit;
+    QTextEdit *descriptionTextEdit;
+    QTextEdit *penaltyTextEdit;
 
     QPushButton *submitButton;
     QPushButton *cancelButton;
