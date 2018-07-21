@@ -41,13 +41,19 @@ void createTablesDb() {
 
     query.prepare("CREATE TABLE setevik (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, story TEXT, company INTEGER)");
     if (!query.exec()) {
-        qWarning() << "Database create tables ERROR: " << query.lastError().text();
+        qWarning() << "Database create tables (setevik) ERROR: " << query.lastError().text();
     }
 
     query.prepare("CREATE TABLE companies (id INTEGER PRIMARY KEY, name TEXT, vk TEXT, keyword TEXT)");
     if (!query.exec()) {
-        qWarning() << "Database create tables ERROR: " << query.lastError().text();
+        qWarning() << "Database create tables (companied) ERROR: " << query.lastError().text();
     }
+
+    query.prepare("CREATE TABLE timers (id INTEGER PRIMARY KEY, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)");
+    if (!query.exec()) {
+        qWarning() << "Database create tables (timers) ERROR: " << query.lastError().text();
+    }
+
 }
 
 void initiSetevikDB(const QString &dbFileName) {
