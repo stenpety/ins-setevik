@@ -3,6 +3,9 @@
 NewTimerDialog::NewTimerDialog(QWidget *parent, const QString &title) : QDialog(parent) {
     setWindowTitle(title);
     createUI();
+
+    setupModel();
+    setupUItoDB();
 }
 
 void NewTimerDialog::createUI() {
@@ -98,6 +101,7 @@ void NewTimerDialog::setupUItoDB() {
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->horizontalHeader()->setStretchLastSection(true);
 
+    mapper = new QDataWidgetMapper();
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     mapper->setModel(setevikModel);
     mapper->setItemDelegate(delegate);
