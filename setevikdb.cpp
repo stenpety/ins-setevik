@@ -106,7 +106,6 @@ void SetevikDB::setupDbModels() {
     setevikModel = new QSqlRelationalTableModel(setevikTable);
     setevikModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     setevikModel->setTable("setevik");
-
     setevikModel->setHeaderData(setevikModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
 
     if (!setevikModel->select()) {
@@ -134,7 +133,6 @@ void SetevikDB::setupUItoDB() {
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->horizontalHeader()->setStretchLastSection(true);
-
 
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
     mapper->setModel(setevikModel);

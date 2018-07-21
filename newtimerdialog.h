@@ -15,7 +15,8 @@ public:
 
 private:
     void createUI();
-
+    void setupModel();
+    void setupUItoDB();
 
 signals:
 
@@ -32,6 +33,7 @@ public:
 
 private:
     QTableView *setevikTable;
+    QSqlRelationalTableModel *setevikModel;
     QPushButton *newSetevikButton;
 
     QLineEdit *startDateLineEdit;
@@ -41,6 +43,10 @@ private:
 
     QPushButton *submitButton;
     QPushButton *cancelButton;
+
+    // Mapper, Delegate
+    QDataWidgetMapper *mapper;
+    QSqlRelationalDelegate *delegate;
 };
 
 #endif // NEWTIMERDIALOG_H

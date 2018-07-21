@@ -77,13 +77,6 @@ void NewSetevikDialog::createUI() {
 
 }
 
-// Private Slots
-void NewSetevikDialog::activateSubmitButton() {
-    submitButton->setEnabled((nameLineEdit->text().length() > 0) &&
-                              (vkLineEdit->text().length() > 0) &&
-                             (storyTextEdit->toPlainText().length() > 0));
-}
-
 void NewSetevikDialog::setupModel() {
 
     QStringList companies;
@@ -99,3 +92,11 @@ void NewSetevikDialog::setupModel() {
     companyModel = new QStringListModel(companies, this);
     companyModel->sort(1, Qt::AscendingOrder);
 }
+
+// Private Slots
+void NewSetevikDialog::activateSubmitButton() {
+    submitButton->setEnabled((nameLineEdit->text().length() > 0) &&
+                              (vkLineEdit->text().length() > 0) &&
+                             (storyTextEdit->toPlainText().length() > 0));
+}
+
