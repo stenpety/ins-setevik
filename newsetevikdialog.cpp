@@ -1,27 +1,11 @@
 #include "newsetevikdialog.h"
 
 NewSetevikDialog::NewSetevikDialog(QWidget *parent, const QString &title) : QDialog(parent) {
-    // TODO: take title as parameter, used both for new and edit
+
     setWindowTitle(title);
     createUI();
 }
 
-int NewSetevikDialog::getCompanyId() const {
-
-    QSqlQuery query;
-    query.prepare("SELECT id FROM companies WHERE name = ?");
-    query.addBindValue(companyComboBox->currentText());
-
-    if (!query.exec()) {
-        qWarning() << "Company ID query ERROR: " << query.lastError().text();
-    }
-
-    if (query.next()) {
-        return query.value(0).toInt();
-    }
-
-    return -1;
-}
 
 void NewSetevikDialog::createUI() {
     auto *layoutMain = new QVBoxLayout();
@@ -91,6 +75,24 @@ void NewSetevikDialog::setupModel() {
     }
     companyModel = new QStringListModel(companies, this);
     companyModel->sort(1, Qt::AscendingOrder);
+}
+
+
+int NewSetevikDialog::getCompanyId() const {
+
+    QSqlQuery query;
+    query.prepare("SELECT id FROM companies WHERE name = ?");
+    query.addBindValue(companyComboBox->currentText());
+
+    if (!query.exec()) {
+        qWarning() << "Company ID query ERROR: " << query.lastError().text();
+    }
+
+    if (query.next()) {
+        return query.value(0).toInt();
+    }
+
+    return -1;
 }
 
 // Private Slots

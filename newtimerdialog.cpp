@@ -2,6 +2,8 @@
 
 NewTimerDialog::NewTimerDialog(QWidget *parent, const QString &title) : QDialog(parent) {
     setWindowTitle(title);
+
+    mapper = new QDataWidgetMapper();
     createUI();
 
     setupModel();
@@ -11,6 +13,7 @@ NewTimerDialog::NewTimerDialog(QWidget *parent, const QString &title) : QDialog(
 void NewTimerDialog::createUI() {
 
     auto *layoutMain = new QHBoxLayout();
+    setLayout(layoutMain);
 
     auto *layoutLeft = new QVBoxLayout();
 
@@ -71,7 +74,7 @@ void NewTimerDialog::createUI() {
 
     layoutMain->addLayout(layoutLeft);
     layoutMain->addLayout(layoutRight);
-    setLayout(layoutMain);
+
 }
 
 void NewTimerDialog::setupModel() {
@@ -93,21 +96,21 @@ void NewTimerDialog::setupUItoDB() {
     setevikTable->setModel(setevikModel);
     delegate = new QSqlRelationalDelegate(setevikTable);
     setevikTable->setItemDelegate(delegate);
+
     setevikTable->setColumnHidden(setevikModel->fieldIndex("id"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("company"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("vk"), true);
     setevikTable->setColumnHidden(setevikModel->fieldIndex("story"), true);
+
     setevikTable->setSelectionMode(QAbstractItemView::SingleSelection);
     setevikTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     setevikTable->horizontalHeader()->setStretchLastSection(true);
 
-    mapper = new QDataWidgetMapper();
-    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-    mapper->setModel(setevikModel);
-    mapper->setItemDelegate(delegate);
-    connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged,
-            mapper, &QDataWidgetMapper::setCurrentModelIndex);
 
+    mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    mapper->setModel(setevikModel); // causes error
+    mapper->setItemDelegate(delegate);
+    connect(setevikTable->selectionModel(), &QItemSelectionModel::currentRowChanged, mapper, &QDataWidgetMapper::setCurrentModelIndex);
 }
 
 void NewTimerDialog::showNewSetevikDialog() {
