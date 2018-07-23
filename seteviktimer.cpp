@@ -48,9 +48,50 @@ void SetevikTimer::createUI() {
 
 }
 
+void SetevikTimer::setupDbModels() {
+
+    timerModel = new QSqlRelationalTableModel(timerTable);
+    timerModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    timerModel->setTable("timers");
+
+    // "CREATE TABLE timers (id INTEGER PRIMARY KEY, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)"
+    timerModel->setHeaderData(timerModel->fieldIndex("start_date"), Qt::Horizontal, tr("Start Date"));
+    timerModel->setHeaderData(timerModel->fieldIndex("duration"), Qt::Horizontal, tr("Duration"));
+    timerModel->setHeaderData(timerModel->fieldIndex("description"), Qt::Horizontal, tr("Description"));
+    timerModel->setHeaderData(timerModel->fieldIndex("penalty"), Qt::Horizontal, tr("Penalty"));
+
+    if (!timerModel->select()) {
+        QMessageBox::critical(this, "Unable to setup TIMER model",
+                              "Error creating Timer table model: " + timerModel->lastError().text());
+        return;
+    }
+
+}
+
+void SetevikTimer::setupUItoDB() {
+
+}
+
 void SetevikTimer::showNewTimerDialog() {
     auto newTimerDialog = new NewTimerDialog(this, "New Timer");
-    newTimerDialog->exec();
+
+    if (newTimerDialog->exec()) {
+        /*
+        int rowCount = setevikModel->rowCount();
+        setevikModel->insertRows(rowCount, 1);
+
+        setevikModel->setData(setevikModel->index(rowCount, 1), newSetevikDialog->nameLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowCount, 2), newSetevikDialog->vkLineEdit->text() );
+        setevikModel->setData(setevikModel->index(rowCount, 3), newSetevikDialog->storyTextEdit->toPlainText() );
+        setevikModel->setData(setevikModel->index(rowCount, 4), newSetevikDialog->getCompanyId() );
+
+        if (!setevikModel->submitAll()) {
+            QMessageBox::critical(this, "Unable to create new Setevik",
+                                  "Error creating Setevik: " + setevikModel->lastError().text());
+            return;
+            */
+        }
+
 }
 
 void SetevikTimer::showEditTimerDialog() {

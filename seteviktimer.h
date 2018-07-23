@@ -16,6 +16,8 @@ public:
 
 private:
     void createUI();
+    void setupDbModels();
+    void setupUItoDB();
 
 signals:
 
