@@ -54,7 +54,8 @@ void SetevikTimer::setupDbModels() {
     timerModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     timerModel->setTable("timers");
 
-    // "CREATE TABLE timers (id INTEGER PRIMARY KEY, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)"
+    // "CREATE TABLE timers (id INTEGER PRIMARY KEY, name INTEGER, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)"
+    timerModel->setHeaderData(timerModel->fieldIndex("name"), Qt::Horizontal, tr("Setevik"));
     timerModel->setHeaderData(timerModel->fieldIndex("start_date"), Qt::Horizontal, tr("Start Date"));
     timerModel->setHeaderData(timerModel->fieldIndex("duration"), Qt::Horizontal, tr("Duration"));
     timerModel->setHeaderData(timerModel->fieldIndex("description"), Qt::Horizontal, tr("Description"));

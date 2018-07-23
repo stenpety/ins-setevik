@@ -49,7 +49,7 @@ void createTablesDb() {
         qWarning() << "Database create tables (companied) ERROR: " << query.lastError().text();
     }
 
-    query.prepare("CREATE TABLE timers (id INTEGER PRIMARY KEY, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)");
+    query.prepare("CREATE TABLE timers (id INTEGER PRIMARY KEY, name INTEGER, start_date INTEGER, duration INTEGER, description TEXT, penalty TEXT)");
     if (!query.exec()) {
         qWarning() << "Database create tables (timers) ERROR: " << query.lastError().text();
     }
